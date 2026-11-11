@@ -52,8 +52,8 @@ jQuery(document).ready(function ($) {
         var param1  = $('#test_param1').val();
         var param2  = $('#test_param2').val();
 
-        if (!mobile || !pattern) {
-            alert('لطفا شماره موبایل گیرنده و کد پترن را وارد فرمایید.');
+        if (!mobile) {
+            alert('لطفا شماره موبایل گیرنده را وارد فرمایید.');
             return;
         }
 

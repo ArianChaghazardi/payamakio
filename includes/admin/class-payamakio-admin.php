@@ -78,6 +78,8 @@ class Payamakio_Admin {
         $settings = get_option( 'payamakio_settings', array() );
         $stats    = Payamakio_Logger::get_stats();
         $logs     = Payamakio_Logger::get_logs( 50 );
+        $gateway  = payamakio_get_gateway();
+        $balance  = method_exists( $gateway, 'get_balance' ) ? $gateway->get_balance() : false;
         require_once PAYAMAKIO_PATH . 'includes/admin/views/settings-page.php';
     }
 
@@ -143,20 +145,28 @@ class Payamakio_Admin {
         $param1  = sanitize_text_field( $_POST['param1'] ?? 'کاربر تستی' );
         $param2  = sanitize_text_field( $_POST['param2'] ?? '12345' );
 
-        if ( empty( $mobile ) || empty( $pattern ) ) {
-            wp_send_json_error( array( 'message' => 'شماره موبایل و کد پترن الزامی هستند.' ) );
+        if ( empty( $mobile ) ) {
+            wp_send_json_error( array( 'message' => 'شماره موبایل گیرنده الزامی است.' ) );
         }
 
-        $mobile = Payamakio_Helper::normalize_mobile( $mobile );
+        $mobile  = Payamakio_Helper::normalize_mobile( $mobile );
         $gateway = payamakio_get_gateway();
 
-        $variables = array(
-            'name'     => $param1,
-            'code'     => $param2,
-            'order_id' => $param2,
-        );
-
-        $result = $gateway->send_pattern( $mobile, $pattern, $variables );
+        if ( ! empty( $pattern ) ) {
+            $variables = array(
+                'name'     => $param1,
+                'code'     => $param2,
+                'order_id' => $param2,
+            );
+            $result = $gateway->send_pattern( $mobile, $pattern, $variables );
+            $event_type = 'test_pattern';
+        } else {
+            $message = "پیامک تستی پیامکیو
+سلام " . $param1 . " عزیز، ارتباط سامانه با درگاه پیامکی با موفقیت برقرار شد.
+کد رهگیری: " . $param2;
+            $result = $gateway->send_sms( $mobile, $message );
+            $event_type = 'test_webservice';
+        }
 
         // Log the test attempt
         Payamakio_Logger::log(
@@ -165,14 +175,14 @@ class Payamakio_Admin {
             $pattern,
             $result['success'] ? 'success' : 'failed',
             $result['success'] ? ( 'تست ارسال موفق. کد رهگیری: ' . ( $result['message_id'] ?? 'OK' ) ) : ( 'خطای تست: ' . ( $result['error'] ?? 'نامشخص' ) ),
-            'test_sandbox',
+            $event_type,
             $result['raw'] ?? ''
         );
 
         if ( $result['success'] ) {
             wp_send_json_success( array(
-                'message'    => 'پیامک آزمایشی با موفقیت به درگاه ارسال شد.',
-                'tracking'   => $result['message_id'] ?? 'OK',
+                'message'  => ! empty( $pattern ) ? 'پیامک الگوی آزمایشی با موفقیت ارسال شد.' : 'پیامک وب سرویس آزمایشی با موفقیت به شماره گیرنده ارسال شد.',
+                'tracking' => $result['message_id'] ?? 'OK',
             ) );
         } else {
             wp_send_json_error( array(

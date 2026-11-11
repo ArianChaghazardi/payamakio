@@ -177,16 +177,22 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
                 <div class="payamakio-sub-settings" id="gw-settings-ippanel" style="<?php echo ( 'ippanel' === $current_gateway ) ? '' : 'display:none;'; ?>">
                     <div class="payamakio-row">
                         <div class="payamakio-col">
-                            <label class="payamakio-label" for="ippanel_apikey">کلید وب سرویس (API Key)</label>
-                            <input type="password" id="ippanel_apikey" name="payamakio[ippanel_apikey]" value="<?php echo esc_attr( $settings['ippanel_apikey'] ?? '' ); ?>" class="payamakio-input" placeholder="مثلا: eyJ0eXAiOiJKV1QiLCJhbGciOi...">
-                            <span class="payamakio-hint">کلید اختصاصی دسترسی از منوی وب سرویس پنل فراز اس ام اس یا IPPanel.</span>
+                            <label class="payamakio-label" for="ippanel_apikey">کلید وب سرویس (API Key / Token)</label>
+                            <input type="password" id="ippanel_apikey" name="payamakio[ippanel_apikey]" value="<?php echo esc_attr( $settings['ippanel_apikey'] ?? '' ); ?>" class="payamakio-input" placeholder="کلید دسترسی IPPanel Edge">
+                            <span class="payamakio-hint">توکن دسترسی معتبر از منوی برنامه نویسان یا وب سرویس پنل IPPanel.</span>
                         </div>
                         <div class="payamakio-col">
-                            <label class="payamakio-label" for="ippanel_sender">شماره خط اختصاصی / خدماتی</label>
+                            <label class="payamakio-label" for="ippanel_sender">شماره خط خدماتی / فرستنده</label>
                             <input type="text" id="ippanel_sender" name="payamakio[ippanel_sender]" value="<?php echo esc_attr( $settings['ippanel_sender'] ?? '+983000505' ); ?>" class="payamakio-input" placeholder="+983000505">
-                            <span class="payamakio-hint">شماره فرستنده پنل شما (به عنوان مثال: +983000505).</span>
+                            <span class="payamakio-hint">خط خدماتی اشتراکی پیشفرض: <strong>+983000505</strong> (دارای تاییدیه خدماتی و عبور از بلک لیست مخابرات).</span>
                         </div>
                     </div>
+                    <?php if ( 'ippanel' === $current_gateway && false !== $balance ) : ?>
+                        <div style="margin-top: 14px; padding: 10px 14px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; color: #065f46; font-size: 13px; display: inline-flex; align-items: center; gap: 8px;">
+                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
+                            <span>اتصال با IPPanel Edge برقرار است | موجودی حساب: <strong><?php echo esc_html( number_format( round( $balance ) ) ); ?> ریال</strong> (معادل <?php echo esc_html( number_format( round( $balance / 10 ) ) ); ?> تومان)</span>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Kavenegar Settings -->
@@ -414,8 +420,8 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
                             <input type="text" id="test_mobile" class="payamakio-input" placeholder="09123456789">
                         </div>
                         <div class="payamakio-col">
-                            <label class="payamakio-label" for="test_pattern">کد الگوی تست (Pattern Code)</label>
-                            <input type="text" id="test_pattern" class="payamakio-input" placeholder="مثلا 10450">
+                            <label class="payamakio-label" for="test_pattern">کد الگوی تست (اختیاری - در صورت خالی بودن پیامک وب سرویس ارسال می شود)</label>
+                            <input type="text" id="test_pattern" class="payamakio-input" placeholder="مثلا 10450 (یا برای تست وب سرویس متنی خالی بگذارید)">
                         </div>
                     </div>
 
