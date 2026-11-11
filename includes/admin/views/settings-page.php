@@ -246,10 +246,12 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
                         </label>
                     </div>
 
+                    <?php Payamakio_Helper::render_default_pattern_box( 'order_completed', 'order_completed_pattern' ); ?>
+
                     <div class="payamakio-row">
                         <div class="payamakio-col">
-                            <label class="payamakio-label">کد پترن / الگو در پنل پیامک</label>
-                            <input type="text" name="payamakio[order_completed_pattern]" value="<?php echo esc_attr( $settings['order_completed_pattern'] ?? '' ); ?>" class="payamakio-input" placeholder="مثلا: 10450">
+                            <label class="payamakio-label" for="order_completed_pattern">کد پترن / الگو در پنل پیامک</label>
+                            <input type="text" id="order_completed_pattern" name="payamakio[order_completed_pattern]" value="<?php echo esc_attr( $settings['order_completed_pattern'] ?? '' ); ?>" class="payamakio-input" placeholder="مثلا: 10450">
                         </div>
                         <div class="payamakio-col">
                             <label class="payamakio-label">ترتیب متغیرهای پترن (جدا شده با کاما انگلیسی)</label>
@@ -272,10 +274,12 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
                         </label>
                     </div>
 
+                    <?php Payamakio_Helper::render_default_pattern_box( 'order_processing', 'order_processing_pattern' ); ?>
+
                     <div class="payamakio-row">
                         <div class="payamakio-col">
-                            <label class="payamakio-label">کد پترن در پنل پیامک</label>
-                            <input type="text" name="payamakio[order_processing_pattern]" value="<?php echo esc_attr( $settings['order_processing_pattern'] ?? '' ); ?>" class="payamakio-input" placeholder="کد پترن">
+                            <label class="payamakio-label" for="order_processing_pattern">کد پترن در پنل پیامک</label>
+                            <input type="text" id="order_processing_pattern" name="payamakio[order_processing_pattern]" value="<?php echo esc_attr( $settings['order_processing_pattern'] ?? '' ); ?>" class="payamakio-input" placeholder="کد پترن">
                         </div>
                     </div>
                 </div>
@@ -315,6 +319,8 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
                         </label>
                     </div>
 
+                    <?php Payamakio_Helper::render_default_pattern_box( 'cart_recovery', 'cart_recovery_pattern' ); ?>
+
                     <div class="payamakio-row">
                         <div class="payamakio-col">
                             <label class="payamakio-label" for="cart_recovery_delay">مدت زمان انتظار پس از رها شدن سبد (دقیقه)</label>
@@ -352,6 +358,8 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
                         </label>
                     </div>
 
+                    <?php Payamakio_Helper::render_default_pattern_box( 'lead_magnet', 'lead_magnet_pattern' ); ?>
+
                     <div class="payamakio-row">
                         <div class="payamakio-col">
                             <label class="payamakio-label" for="lead_magnet_pattern">کد پترن لید مگنت</label>
@@ -388,6 +396,8 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
                             <span class="payamakio-slider"></span>
                         </label>
                     </div>
+
+                    <?php Payamakio_Helper::render_default_pattern_box( 'admin_alert', 'admin_alert_pattern' ); ?>
 
                     <div class="payamakio-row">
                         <div class="payamakio-col">

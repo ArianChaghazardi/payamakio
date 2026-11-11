@@ -43,6 +43,94 @@ jQuery(document).ready(function ($) {
         $('#gw-settings-' + selectedGw).fadeIn(200);
     });
 
+    // Copy Pattern Text to Clipboard
+    $(document).on('click', '.payamakio-btn-copy', function (e) {
+        e.preventDefault();
+        var targetId = $(this).data('target');
+        var $textarea = $('#' + targetId);
+        var text = $textarea.val();
+        var $btn = $(this);
+        var origHtml = $btn.html();
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () {
+                $btn.html('<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> کپی شد!').css('color', '#059669');
+                setTimeout(function () {
+                    $btn.html(origHtml).css('color', '');
+                }, 2200);
+            });
+        } else {
+            var $temp = $('<textarea>');
+            $('body').append($temp);
+            $temp.val(text).select();
+            document.execCommand('copy');
+            $temp.remove();
+
+            $btn.html('<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> کپی شد!').css('color', '#059669');
+            setTimeout(function () {
+                $btn.html(origHtml).css('color', '');
+            }, 2200);
+        }
+    });
+
+    // Auto Register Pattern in IPPanel via Edge API
+    $(document).on('click', '.payamakio-btn-auto-reg', function (e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var patternKey = $btn.data('key');
+        var targetInputId = $btn.data('target-input');
+        var messageText = $('#def-pattern-' + patternKey).val();
+
+        if (!confirm('آیا مایلید این الگوی پیامک به صورت مستقیم در پنل IPPanel شما ثبت گردد؟')) {
+            return;
+        }
+
+        var origHtml = $btn.html();
+        $btn.prop('disabled', true).html('<span class="payamakio-spinner" style="display:inline-block;width:12px;height:12px;margin-left:6px;vertical-align:middle;"></span> در حال ثبت...');
+
+        $.ajax({
+            url: payamakio_vars.ajax_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'payamakio_register_pattern',
+                nonce: payamakio_vars.nonce,
+                pattern_key: patternKey,
+                message: messageText
+            },
+            success: function (res) {
+                $btn.prop('disabled', false).html(origHtml);
+                if (res.success) {
+                    $('#' + targetInputId).val(res.data.pattern_code).css({
+                        'border-color': '#10b981',
+                        'box-shadow': '0 0 0 3px rgba(16, 185, 129, 0.2)'
+                    });
+                    alert('الگو با موفقیت در سامانه آی پی پنل ثبت شد!\nکد الگو: ' + res.data.pattern_code + '\nوضعیت: ' + res.data.status + '\nکد پترن به صورت خودکار در کادر مربوطه درج شد.');
+                } else {
+                    alert('خطا در ثبت الگو: ' + (res.data ? res.data.message : 'خطای سرور'));
+                }
+            },
+            error: function () {
+                $btn.prop('disabled', false).html(origHtml);
+                alert('خطا در برقراری ارتباط با سرور.');
+            }
+        });
+    });
+
+    // Variable Chip Click - Insert into Textarea
+    $(document).on('click', '.payamakio-var-pill', function () {
+        var varCode = $(this).find('code').text();
+        var $card = $(this).closest('.payamakio-default-pattern-card');
+        var $textarea = $card.find('.payamakio-pattern-textarea');
+
+        if ($textarea.length) {
+            var val = $textarea.val();
+            if (val.indexOf(varCode) === -1) {
+                $textarea.val(val + ' ' + varCode);
+            }
+        }
+    });
+
     // Live Test SMS Send Runner
     $('#payamakio-btn-test-send').on('click', function (e) {
         e.preventDefault();

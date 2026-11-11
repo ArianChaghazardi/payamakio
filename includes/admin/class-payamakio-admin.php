@@ -29,6 +29,7 @@ class Payamakio_Admin {
 
         // AJAX Handlers
         add_action( 'wp_ajax_payamakio_send_test', array( $this, 'ajax_send_test' ) );
+        add_action( 'wp_ajax_payamakio_register_pattern', array( $this, 'ajax_register_pattern' ) );
         add_action( 'wp_ajax_payamakio_clear_logs', array( $this, 'ajax_clear_logs' ) );
     }
 
@@ -161,9 +162,7 @@ class Payamakio_Admin {
             $result = $gateway->send_pattern( $mobile, $pattern, $variables );
             $event_type = 'test_pattern';
         } else {
-            $message = "پیامک تستی پیامکیو
-سلام " . $param1 . " عزیز، ارتباط سامانه با درگاه پیامکی با موفقیت برقرار شد.
-کد رهگیری: " . $param2;
+            $message = "پیامک تستی پیامکیو\nسلام " . $param1 . " عزیز، ارتباط سامانه با درگاه پیامکی با موفقیت برقرار شد.\nکد رهگیری: " . $param2;
             $result = $gateway->send_sms( $mobile, $message );
             $event_type = 'test_webservice';
         }
@@ -187,6 +186,56 @@ class Payamakio_Admin {
         } else {
             wp_send_json_error( array(
                 'message' => 'ارسال پیامک ناموفق بود: ' . ( $result['error'] ?? 'خطای ناشناخته در درگاه' ),
+            ) );
+        }
+    }
+
+    public function ajax_register_pattern() {
+        check_ajax_referer( 'payamakio_admin_nonce', 'nonce' );
+
+        if ( ! current_user_can( 'manage_woocommerce' ) ) {
+            wp_send_json_error( array( 'message' => 'عدم دسترسی کافی.' ) );
+        }
+
+        $pattern_key = sanitize_text_field( $_POST['pattern_key'] ?? '' );
+        $custom_text = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
+
+        $defaults = Payamakio_Helper::get_default_patterns();
+        if ( ! isset( $defaults[ $pattern_key ] ) ) {
+            wp_send_json_error( array( 'message' => 'نوع الگوی درخواستی نامعتبر است.' ) );
+        }
+
+        $pattern_data = $defaults[ $pattern_key ];
+        $message = ! empty( $custom_text ) ? $custom_text : $pattern_data['message'];
+
+        $gateway = payamakio_get_gateway();
+        if ( ! method_exists( $gateway, 'create_pattern' ) ) {
+            wp_send_json_error( array( 'message' => 'درگاه فعال قابلیت ثبت خودکار الگو را پشتیبانی نمی کند.' ) );
+        }
+
+        $result = $gateway->create_pattern(
+            $pattern_data['title'],
+            $pattern_data['description'],
+            $message,
+            $pattern_data['variables'],
+            home_url()
+        );
+
+        if ( $result['success'] ) {
+            // Also auto-save the pattern code into options!
+            $settings = get_option( 'payamakio_settings', array() );
+            $opt_key = $pattern_key . '_pattern';
+            $settings[ $opt_key ] = $result['pattern_code'];
+            update_option( 'payamakio_settings', $settings );
+
+            wp_send_json_success( array(
+                'message'      => 'الگو با موفقیت در سامانه آی پی پنل ثبت شد و در صف تایید اپراتور قرار گرفت.',
+                'pattern_code' => $result['pattern_code'],
+                'status'       => $result['status'],
+            ) );
+        } else {
+            wp_send_json_error( array(
+                'message' => 'خطا در ثبت الگو: ' . ( $result['error'] ?? 'خطای ناشناخته' ),
             ) );
         }
     }
