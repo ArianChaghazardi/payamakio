@@ -21,37 +21,69 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
     <header class="payamakio-header">
         <div class="payamakio-header-inner">
             <div class="payamakio-brand">
-                <div class="payamakio-logo-badge">
+                <div class="payamakio-brand-icon">
                     <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                         <path d="M13 8l-4 4"></path>
                         <path d="M9 8l4 4"></path>
                     </svg>
                 </div>
-                <div>
-                    <div class="payamakio-title-row">
-                        <h1 class="payamakio-title">پیامکیو</h1>
-                        <span class="payamakio-version-tag">نسخه <?php echo esc_html( PAYAMAKIO_VERSION ); ?></span>
-                        <span class="payamakio-status-pill payamakio-status-online">
-                            <span class="payamakio-pulse"></span>
-                            سیستم آماده به کار
-                        </span>
+                <div class="payamakio-brand-text">
+                    <div class="payamakio-brand-title">
+                        <h1>پیامکیو</h1>
+                        <span class="payamakio-brand-badge">Payamakio v<?php echo esc_html( PAYAMAKIO_VERSION ); ?></span>
                     </div>
-                    <p class="payamakio-subtitle">سامانه هوشمند ارسال فوق سریع پترن و اتوماسیون پیامک ووکامرس</p>
+                    <p class="payamakio-brand-desc">
+                        سامانه هوشمند ارسال فوق سریع پترن و اتوماسیون پیامک ووکامرس
+                    </p>
                 </div>
             </div>
 
-            <div class="payamakio-author-badges">
-                <a href="https://arianchaghazardi.ir" target="_blank" class="payamakio-chip">
-                    <span class="payamakio-chip-label">توسعه دهنده:</span>
-                    <span class="payamakio-chip-val">آرین چقازردی</span>
-                </a>
-                <a href="https://hectortm.ir" target="_blank" class="payamakio-chip payamakio-chip-brand">
-                    <span class="payamakio-chip-label">محصول:</span>
-                    <span class="payamakio-chip-val">هکتورتیم</span>
-                </a>
+            <div class="payamakio-header-meta">
+                <div class="payamakio-status-pill">
+                    <span class="payamakio-pulse-dot"></span>
+                    <span>سامانه ارسال پیامک فعال و آنلاین</span>
+                </div>
+                <div class="payamakio-author-badge">
+                    <span>توسعه توسط</span>
+                    <a href="https://arianchaghazardi.ir" target="_blank" rel="noopener">آرین چقازردی</a>
+                    <span class="payamakio-sep">&bull;</span>
+                    <a href="https://hectortm.ir" target="_blank" rel="noopener">هکتورتیم</a>
+                </div>
             </div>
         </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="payamakio-tabs">
+            <a href="#tab-gateways" class="payamakio-tab-btn active" data-tab="tab-gateways">
+                <span class="payamakio-tab-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg></span>
+                <span class="payamakio-tab-text">تنظیمات درگاه پیامک</span>
+            </a>
+            <a href="#tab-orders" class="payamakio-tab-btn" data-tab="tab-orders">
+                <span class="payamakio-tab-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></span>
+                <span class="payamakio-tab-text">پیامک وضعیت سفارشات</span>
+            </a>
+            <a href="#tab-cart" class="payamakio-tab-btn" data-tab="tab-cart">
+                <span class="payamakio-tab-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></span>
+                <span class="payamakio-tab-text">بازیابی سبد خرید رها شده</span>
+            </a>
+            <a href="#tab-lead" class="payamakio-tab-btn" data-tab="tab-lead">
+                <span class="payamakio-tab-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg></span>
+                <span class="payamakio-tab-text">لید مگنت و هدیه 0 تومانی</span>
+            </a>
+            <a href="#tab-admin" class="payamakio-tab-btn" data-tab="tab-admin">
+                <span class="payamakio-tab-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></span>
+                <span class="payamakio-tab-text">اعلان سفارش جدید به مدیر</span>
+            </a>
+            <a href="#tab-sandbox" class="payamakio-tab-btn" data-tab="tab-sandbox">
+                <span class="payamakio-tab-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></span>
+                <span class="payamakio-tab-text">تست زنده ارسال</span>
+            </a>
+            <a href="#tab-logs" class="payamakio-tab-btn" data-tab="tab-logs">
+                <span class="payamakio-tab-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
+                <span class="payamakio-tab-text">تاریخچه و لاگ ها</span>
+            </a>
+        </nav>
     </header>
 
     <?php if ( isset( $_GET['updated'] ) ) : ?>
@@ -103,38 +135,6 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
             </div>
         </div>
     </div>
-
-    <!-- Navigation Tabs -->
-    <nav class="payamakio-tabs">
-        <a href="#tab-gateways" class="payamakio-tab-btn active" data-tab="tab-gateways">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-            تنظیمات درگاه پیامک
-        </a>
-        <a href="#tab-orders" class="payamakio-tab-btn" data-tab="tab-orders">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-            پیامک وضعیت سفارشات
-        </a>
-        <a href="#tab-cart" class="payamakio-tab-btn" data-tab="tab-cart">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-            بازیابی سبد خرید رها شده
-        </a>
-        <a href="#tab-lead" class="payamakio-tab-btn" data-tab="tab-lead">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>
-            لید مگنت و هدیه 0 تومانی
-        </a>
-        <a href="#tab-admin" class="payamakio-tab-btn" data-tab="tab-admin">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-            اعلان سفارش جدید به مدیر
-        </a>
-        <a href="#tab-sandbox" class="payamakio-tab-btn" data-tab="tab-sandbox">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-            تست زنده ارسال
-        </a>
-        <a href="#tab-logs" class="payamakio-tab-btn" data-tab="tab-logs">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-            تاریخچه و لاگ ها
-        </a>
-    </nav>
 
     <!-- Form Container -->
     <form method="post" action="" id="payamakio-settings-form">

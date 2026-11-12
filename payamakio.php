@@ -3,7 +3,7 @@
  * Plugin Name: پیامکیو | سامانه هوشمند پیامک و اتوماسیون ووکامرس
  * Plugin URI: https://hectortm.ir/payamakio
  * Description: افزونه جامع و مدرن اطلاع رسانی پیامکی، بازیابی هوشمند سبد خرید رها شده و ارسال فوق سریع پترن ووکامرس با پنل مدیریت پیشرفته.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: آرین چقازردی
  * Author URI: https://arianchaghazardi.ir
  * Developer: هکتورتیم
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define Plugin Constants
-define( 'PAYAMAKIO_VERSION', '1.0.1' );
+define( 'PAYAMAKIO_VERSION', '1.0.2' );
 define( 'PAYAMAKIO_FILE', __FILE__ );
 define( 'PAYAMAKIO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PAYAMAKIO_URL', plugin_dir_url( __FILE__ ) );
