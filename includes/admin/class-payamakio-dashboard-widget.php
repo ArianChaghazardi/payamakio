@@ -158,6 +158,8 @@ class Payamakio_Dashboard_Widget {
         $gateway_name = $gateway->get_name();
         $panel_url    = method_exists( $gateway, 'get_panel_url' ) ? $gateway->get_panel_url() : 'https://ippanel.com';
         $balance      = method_exists( $gateway, 'get_balance' ) ? $gateway->get_balance() : false;
+        $balance_rial  = ( false !== $balance ) ? round( (float) $balance ) : false;
+        $balance_toman = ( false !== $balance ) ? round( (float) $balance / 10 ) : false;
 
         $stats        = Payamakio_Logger::get_stats();
         $total        = (int) ( $stats['total'] ?? 0 );
@@ -217,18 +219,19 @@ class Payamakio_Dashboard_Widget {
                         <span>اعتبار کیف پول سرویس پیامک</span>
                     </div>
                     <div class="payamakio-dw-hero-balance">
-                        <?php if ( false !== $balance ) : ?>
-                            <span class="payamakio-dw-balance-num"><?php echo esc_html( Payamakio_Helper::format_number( $balance ) ); ?></span>
+                        <?php if ( false !== $balance_toman ) : ?>
+                            <span class="payamakio-dw-balance-num"><?php echo esc_html( Payamakio_Helper::format_number( $balance_toman ) ); ?></span>
                             <span class="payamakio-dw-balance-unit">تومان</span>
+                            <span class="payamakio-dw-balance-rial">(<?php echo esc_html( Payamakio_Helper::format_number( $balance_rial ) ); ?> ریال)</span>
                         <?php else : ?>
                             <span class="payamakio-dw-balance-na">ثبت نشده / نیاز به تنظیم</span>
                         <?php endif; ?>
                     </div>
                     <div class="payamakio-dw-hero-meta">
-                        <?php if ( false !== $balance ) : ?>
-                            <?php if ( $balance > 10000 ) : ?>
+                        <?php if ( false !== $balance_toman ) : ?>
+                            <?php if ( $balance_toman >= 2000 ) : ?>
                                 <span class="payamakio-dw-badge payamakio-dw-badge-good">موجودی کافی</span>
-                            <?php elseif ( $balance > 0 ) : ?>
+                            <?php elseif ( $balance_toman > 0 ) : ?>
                                 <span class="payamakio-dw-badge payamakio-dw-badge-warn">موجودی رو به اتمام (نیاز به شارژ)</span>
                             <?php else : ?>
                                 <span class="payamakio-dw-badge payamakio-dw-badge-danger">بدون اعتبار</span>

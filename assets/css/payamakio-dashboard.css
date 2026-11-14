@@ -202,6 +202,7 @@
     align-items: baseline;
     gap: 6px;
     margin-top: 2px;
+    flex-wrap: wrap;
 }
 
 .payamakio-dw-balance-num {
@@ -216,6 +217,13 @@
     font-size: 0.85rem;
     color: #cbd5e1;
     font-weight: 600;
+}
+
+.payamakio-dw-balance-rial {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    font-weight: 500;
+    margin-right: 2px;
 }
 
 .payamakio-dw-balance-na {
