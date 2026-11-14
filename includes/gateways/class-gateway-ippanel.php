@@ -320,4 +320,8 @@ class Payamakio_Gateway_IPPanel implements Payamakio_Gateway_Interface {
         $data = json_decode( wp_remote_retrieve_body( $response ), true );
         return $data['data'] ?? false;
     }
+
+    public function get_panel_url() {
+        return 'https://ippanel.com';
+    }
 }

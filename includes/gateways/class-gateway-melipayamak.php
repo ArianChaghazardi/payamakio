@@ -140,4 +140,39 @@ class Payamakio_Gateway_MeliPayamak implements Payamakio_Gateway_Interface {
             'raw'        => $data,
         );
     }
+
+    public function get_balance() {
+        if ( empty( $this->username ) || empty( $this->password ) ) {
+            return false;
+        }
+
+        $body = array(
+            'username' => $this->username,
+            'password' => $this->password,
+        );
+
+        $response = wp_remote_post(
+            'https://rest.payamak-panel.com/api/SendSMS/GetCredit',
+            array(
+                'headers' => array( 'Content-Type' => 'application/json' ),
+                'body'    => wp_json_encode( $body ),
+                'timeout' => 10,
+            )
+        );
+
+        if ( is_wp_error( $response ) ) {
+            return false;
+        }
+
+        $data = json_decode( wp_remote_retrieve_body( $response ), true );
+        if ( isset( $data['Value'] ) && is_numeric( $data['Value'] ) ) {
+            return (float) $data['Value'];
+        }
+
+        return false;
+    }
+
+    public function get_panel_url() {
+        return 'https://melipayamak.ir';
+    }
 }

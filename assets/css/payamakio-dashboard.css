@@ -1,0 +1,780 @@
+/**
+ * Payamakio WordPress Dashboard Widget Stylesheet
+ * Fully Responsive, Zero-Overflow, Container Query Optimized
+ * Glowing Crimson-Red & Modern Slate Aesthetic
+ * Author: Arian Chaghazardi
+ * Brand: HectorTM
+ */
+
+#payamakio_dashboard_widget {
+    container-type: inline-size;
+    container-name: payamakio-dw;
+}
+
+#payamakio_dashboard_widget .inside {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+.payamakio-dw-root {
+    font-family: inherit;
+    direction: rtl;
+    text-align: right;
+    color: #1e293b;
+    box-sizing: border-box;
+    font-size: 13px;
+    line-height: 1.5;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.payamakio-dw-root * {
+    box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Top Bar & Status
+   -------------------------------------------------------------------------- */
+.payamakio-dw-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.payamakio-dw-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+
+.payamakio-dw-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.payamakio-dw-pill-online {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.payamakio-dw-pill-offline {
+    background: #fffbeb;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.payamakio-dw-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.payamakio-dw-dot.online {
+    background: #10b981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
+    animation: payamakioDwPulse 2s infinite;
+}
+
+.payamakio-dw-dot.offline {
+    background: #f59e0b;
+}
+
+@keyframes payamakioDwPulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+    70% { transform: scale(1); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.payamakio-dw-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.payamakio-dw-btn-refresh {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #475569;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    line-height: 1;
+}
+
+.payamakio-dw-btn-refresh:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-color: #94a3b8;
+}
+
+.payamakio-dw-btn-refresh.is-spinning svg {
+    animation: payamakioSpin 0.8s linear infinite;
+}
+
+@keyframes payamakioSpin {
+    100% { transform: rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   Hero Balance Card
+   -------------------------------------------------------------------------- */
+.payamakio-dw-hero-card {
+    position: relative;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    margin: 12px 14px;
+    padding: 16px 18px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px -6px rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.payamakio-dw-hero-bg-glow {
+    position: absolute;
+    top: -40px;
+    left: -40px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.35) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.payamakio-dw-hero-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    z-index: 1;
+}
+
+.payamakio-dw-hero-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.payamakio-dw-hero-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.payamakio-dw-hero-icon {
+    display: inline-flex;
+    align-items: center;
+    color: #f87171;
+}
+
+.payamakio-dw-hero-balance {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: 2px;
+}
+
+.payamakio-dw-balance-num {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
+.payamakio-dw-balance-unit {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    font-weight: 600;
+}
+
+.payamakio-dw-balance-na {
+    font-size: 1.1rem;
+    color: #fca5a5;
+    font-weight: 600;
+}
+
+.payamakio-dw-hero-meta {
+    margin-top: 4px;
+}
+
+.payamakio-dw-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.payamakio-dw-badge-good {
+    background: rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.payamakio-dw-badge-warn {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fcd34d;
+    border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.payamakio-dw-badge-danger {
+    background: rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.45);
+}
+
+.payamakio-dw-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.payamakio-dw-btn-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+.payamakio-dw-btn-hero-primary {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.payamakio-dw-btn-hero-primary:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.45);
+    color: #ffffff !important;
+}
+
+.payamakio-dw-btn-hero-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.payamakio-dw-btn-hero-secondary:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   KPI Stats Grid
+   -------------------------------------------------------------------------- */
+.payamakio-dw-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 0 14px 12px 14px;
+}
+
+.payamakio-dw-stat-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    transition: all 0.2s ease;
+}
+
+.payamakio-dw-stat-card:hover {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+}
+
+.payamakio-dw-stat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+}
+
+.payamakio-dw-stat-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.payamakio-dw-stat-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.payamakio-dw-stat-icon.indigo {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+.payamakio-dw-stat-icon.emerald {
+    background: #d1fae5;
+    color: #047857;
+}
+
+.payamakio-dw-stat-icon.purple {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+.payamakio-dw-stat-icon.rose {
+    background: #ffe4e6;
+    color: #be123c;
+}
+
+.payamakio-dw-stat-val {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.payamakio-dw-stat-sub {
+    font-size: 10.5px;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.payamakio-dw-stat-rate {
+    color: #059669;
+    font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Sections (Modules & Logs)
+   -------------------------------------------------------------------------- */
+.payamakio-dw-section {
+    padding: 10px 14px 12px 14px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.payamakio-dw-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 8px;
+}
+
+.payamakio-dw-section-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #334155;
+}
+
+.payamakio-dw-section-link {
+    font-size: 11px;
+    color: #e11d48;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.payamakio-dw-section-link:hover {
+    color: #be123c;
+    text-decoration: underline;
+}
+
+/* Modules Grid */
+.payamakio-dw-modules-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.payamakio-dw-module-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 9px;
+    border-radius: 6px;
+    font-size: 11px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    border: 1px solid transparent;
+}
+
+.payamakio-dw-module-chip.is-active {
+    background: #f0fdf4;
+    color: #166534;
+    border-color: #bbf7d0;
+}
+
+.payamakio-dw-module-chip.is-active:hover {
+    background: #dcfce7;
+    color: #14532d;
+}
+
+.payamakio-dw-module-chip.is-inactive {
+    background: #f8fafc;
+    color: #64748b;
+    border-color: #e2e8f0;
+}
+
+.payamakio-dw-module-chip.is-inactive:hover {
+    background: #f1f5f9;
+    color: #334155;
+}
+
+.payamakio-dw-module-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.payamakio-dw-module-chip.is-active .payamakio-dw-module-dot {
+    background: #22c55e;
+}
+
+.payamakio-dw-module-chip.is-inactive .payamakio-dw-module-dot {
+    background: #cbd5e1;
+}
+
+.payamakio-dw-module-name {
+    font-weight: 600;
+}
+
+.payamakio-dw-module-state {
+    font-size: 10px;
+    opacity: 0.8;
+}
+
+/* Recent Logs Feed */
+.payamakio-dw-logs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.payamakio-dw-empty {
+    padding: 20px 10px;
+    text-align: center;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    color: #64748b;
+}
+
+.payamakio-dw-empty-icon {
+    color: #94a3b8;
+    margin-bottom: 6px;
+}
+
+.payamakio-dw-empty p {
+    margin: 0 0 10px 0;
+    font-size: 11.5px;
+}
+
+.payamakio-dw-empty-btn {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #e11d48;
+    color: #ffffff !important;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.payamakio-dw-log-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-right: 3px solid #cbd5e1;
+    transition: all 0.15s ease;
+}
+
+.payamakio-dw-log-item:hover {
+    background: #f1f5f9;
+}
+
+.payamakio-dw-log-item.is-success {
+    border-right-color: #10b981;
+}
+
+.payamakio-dw-log-item.is-failed {
+    border-right-color: #ef4444;
+}
+
+.payamakio-dw-log-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.payamakio-dw-log-item.is-success .payamakio-dw-log-icon {
+    background: #d1fae5;
+    color: #059669;
+}
+
+.payamakio-dw-log-item.is-failed .payamakio-dw-log-icon {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.payamakio-dw-log-details {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.payamakio-dw-log-row1 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.payamakio-dw-log-phone {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 11.5px;
+    letter-spacing: 0.3px;
+}
+
+.payamakio-dw-log-badge {
+    background: #e2e8f0;
+    color: #475569;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.payamakio-dw-log-time {
+    color: #94a3b8;
+    font-size: 10.5px;
+    margin-right: auto;
+}
+
+.payamakio-dw-log-row2 {
+    min-width: 0;
+}
+
+.payamakio-dw-log-msg {
+    color: #64748b;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.payamakio-dw-log-status {
+    flex-shrink: 0;
+}
+
+.payamakio-dw-status-tag {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.payamakio-dw-status-tag.tag-success {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.payamakio-dw-status-tag.tag-failed {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* --------------------------------------------------------------------------
+   Quick Action Buttons Grid
+   -------------------------------------------------------------------------- */
+.payamakio-dw-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+}
+
+.payamakio-dw-action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 9px 6px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #334155 !important;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.payamakio-dw-action-btn:hover {
+    background: #ffffff;
+    border-color: #f43f5e;
+    color: #e11d48 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px -2px rgba(225, 29, 72, 0.15);
+}
+
+.payamakio-dw-action-icon {
+    color: #e11d48;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.payamakio-dw-action-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.payamakio-dw-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: #f1f5f9;
+    border-top: 1px solid #e2e8f0;
+    font-size: 11px;
+    color: #64748b;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.payamakio-dw-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.payamakio-dw-footer-name {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.payamakio-dw-divider {
+    color: #cbd5e1;
+}
+
+.payamakio-dw-footer-link {
+    color: #e11d48;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.payamakio-dw-footer-link:hover {
+    color: #be123c;
+    text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Container Queries for True Dashboard Responsiveness
+   -------------------------------------------------------------------------- */
+@container payamakio-dw (max-width: 520px) {
+    .payamakio-dw-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .payamakio-dw-actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .payamakio-dw-hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .payamakio-dw-hero-actions {
+        width: 100%;
+    }
+    .payamakio-dw-btn-hero {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+@container payamakio-dw (max-width: 360px) {
+    .payamakio-dw-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .payamakio-dw-actions-grid {
+        grid-template-columns: 1fr;
+    }
+    .payamakio-dw-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .payamakio-dw-btn-refresh {
+        align-self: flex-end;
+    }
+}

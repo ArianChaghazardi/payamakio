@@ -154,4 +154,34 @@ class Payamakio_Gateway_Kavenegar implements Payamakio_Gateway_Interface {
             'raw'        => $data,
         );
     }
+
+    public function get_balance() {
+        if ( empty( $this->api_key ) ) {
+            return false;
+        }
+
+        $url = sprintf( 'https://api.kavenegar.com/v1/%s/account/info.json', $this->api_key );
+
+        $response = wp_remote_get(
+            $url,
+            array(
+                'timeout' => 10,
+            )
+        );
+
+        if ( is_wp_error( $response ) ) {
+            return false;
+        }
+
+        $data = json_decode( wp_remote_retrieve_body( $response ), true );
+        if ( isset( $data['entries']['remaincredit'] ) ) {
+            return (float) $data['entries']['remaincredit'];
+        }
+
+        return false;
+    }
+
+    public function get_panel_url() {
+        return 'https://panel.kavenegar.com';
+    }
 }

@@ -3,7 +3,7 @@
  * Plugin Name: پیامکیو | سامانه هوشمند پیامک و اتوماسیون ووکامرس
  * Plugin URI: https://hectortm.ir/payamakio
  * Description: افزونه جامع و مدرن اطلاع رسانی پیامکی، بازیابی هوشمند سبد خرید رها شده و ارسال فوق سریع پترن ووکامرس با پنل مدیریت پیشرفته.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: آرین چقازردی
  * Author URI: https://arianchaghazardi.ir
  * Developer: هکتورتیم
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define Plugin Constants
-define( 'PAYAMAKIO_VERSION', '1.0.2' );
+define( 'PAYAMAKIO_VERSION', '1.0.3' );
 define( 'PAYAMAKIO_FILE', __FILE__ );
 define( 'PAYAMAKIO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PAYAMAKIO_URL', plugin_dir_url( __FILE__ ) );
@@ -74,8 +74,9 @@ final class Payamakio {
         require_once PAYAMAKIO_PATH . 'includes/modules/class-module-admin-alerts.php';
 
         // Admin
-        if ( is_admin() ) {
+        if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
             require_once PAYAMAKIO_PATH . 'includes/admin/class-payamakio-admin.php';
+            require_once PAYAMAKIO_PATH . 'includes/admin/class-payamakio-dashboard-widget.php';
         }
     }
 
@@ -96,8 +97,9 @@ final class Payamakio {
         Payamakio_Module_Lead_Magnet::get_instance();
         Payamakio_Module_Admin_Alerts::get_instance();
 
-        if ( is_admin() ) {
+        if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
             Payamakio_Admin::get_instance();
+            Payamakio_Dashboard_Widget::get_instance();
         }
     }
 

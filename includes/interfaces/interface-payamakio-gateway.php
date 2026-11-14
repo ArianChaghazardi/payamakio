@@ -45,4 +45,18 @@ interface Payamakio_Gateway_Interface {
      * @return array
      */
     public function send_sms( $to, $message );
+
+    /**
+     * Get account credit / wallet balance
+     *
+     * @return float|false
+     */
+    public function get_balance();
+
+    /**
+     * Get external management portal URL
+     *
+     * @return string
+     */
+    public function get_panel_url();
 }

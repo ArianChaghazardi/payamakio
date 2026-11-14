@@ -263,4 +263,113 @@ class Payamakio_Helper {
         </div>
         <?php
     }
+
+    /**
+     * Format number with thousand separators and Persian digits
+     */
+    public static function format_number( $number ) {
+        if ( ! is_numeric( $number ) ) {
+            return self::to_persian_digits( (string) $number );
+        }
+        $formatted = number_format( (float) $number );
+        return self::to_persian_digits( $formatted );
+    }
+
+    /**
+     * Human readable Persian time difference without ZWNJ
+     */
+    public static function time_ago( $datetime ) {
+        $timestamp = is_numeric( $datetime ) ? (int) $datetime : strtotime( $datetime );
+        if ( ! $timestamp ) {
+            return '';
+        }
+
+        $now  = current_time( 'timestamp' );
+        $diff = max( 0, $now - $timestamp );
+
+        if ( $diff < 10 ) {
+            return 'همین الان';
+        } elseif ( $diff < 60 ) {
+            return self::to_persian_digits( $diff ) . ' ثانیه پیش';
+        } elseif ( $diff < 3600 ) {
+            $mins = max( 1, round( $diff / 60 ) );
+            return self::to_persian_digits( $mins ) . ' دقیقه پیش';
+        } elseif ( $diff < 86400 ) {
+            $hours = max( 1, round( $diff / 3600 ) );
+            return self::to_persian_digits( $hours ) . ' ساعت پیش';
+        } else {
+            $days = max( 1, round( $diff / 86400 ) );
+            return self::to_persian_digits( $days ) . ' روز پیش';
+        }
+    }
+
+    /**
+     * Mask Iranian mobile number for privacy (e.g. 0933***4401)
+     */
+    public static function mask_mobile( $mobile ) {
+        $clean = self::normalize_mobile( $mobile );
+        if ( strlen( $clean ) === 11 ) {
+            $masked = substr( $clean, 0, 4 ) . '***' . substr( $clean, 7, 4 );
+            return self::to_persian_digits( $masked );
+        }
+        return self::to_persian_digits( $mobile );
+    }
+
+    /**
+     * SVG icon provider
+     */
+    public static function icon( $name, $size = 20, $class = '' ) {
+        $s = (int) $size;
+        $c = esc_attr( $class );
+        $common = 'viewBox="0 0 24 24" width="' . $s . '" height="' . $s . '" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="' . $c . '"';
+
+        switch ( $name ) {
+            case 'wallet':
+                return '<svg ' . $common . '><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path><path d="M16 3H4a2 2 0 0 0-2 2v2"></path><circle cx="16" cy="14" r="1.5"></circle></svg>';
+
+            case 'sms':
+            case 'message':
+                return '<svg ' . $common . '><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
+
+            case 'send':
+                return '<svg ' . $common . '><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>';
+
+            case 'check':
+                return '<svg ' . $common . '><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+            case 'alert':
+                return '<svg ' . $common . '><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+
+            case 'clock':
+                return '<svg ' . $common . '><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>';
+
+            case 'refresh':
+                return '<svg ' . $common . '><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>';
+
+            case 'settings':
+                return '<svg ' . $common . '><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>';
+
+            case 'cart':
+                return '<svg ' . $common . '><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>';
+
+            case 'box':
+            case 'order':
+                return '<svg ' . $common . '><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>';
+
+            case 'gift':
+                return '<svg ' . $common . '><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>';
+
+            case 'bell':
+                return '<svg ' . $common . '><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>';
+
+            case 'external':
+                return '<svg ' . $common . '><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
+
+            case 'chevron-left':
+                return '<svg ' . $common . '><polyline points="15 18 9 12 15 6"></polyline></svg>';
+
+            default:
+                return '';
+        }
+    }
 }
