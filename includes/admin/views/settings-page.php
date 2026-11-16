@@ -464,7 +464,7 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
                             <span class="payamakio-slider"></span>
                         </label>
                     </div>
-                    <span class="payamakio-hint" style="display: block; margin-bottom: 16px;">کاربرانی که آدرس wp-login.php را باز کنند به صورت خودکار به برگه اختصاصی ورود پیامکی منتقل می شوند.</span>
+                    <span class="payamakio-hint" style="display: block; margin-bottom: 16px;">کاربرانی که آدرس عمومی wp-login.php را باز کنند به برگه ورود پیامکی منتقل می شوند. آدرس های اختصاصی و امنیتی ادمین (مانند افزونه های امنیتی AIOS یا WPS Hide Login) جهت ورود مدیران سایت همیشه حفظ می شوند.</span>
 
                     <div class="payamakio-row" style="margin-top: 15px;">
                         <div class="payamakio-col">

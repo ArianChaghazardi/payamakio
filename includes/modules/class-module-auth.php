@@ -287,6 +287,36 @@ class Payamakio_Module_Auth {
             return;
         }
 
+        // Bypass if explicit admin query param is passed (?normal_login=1, ?wplogin=1, ?admin=1, ?core=1)
+        if ( isset( $_GET['normal_login'] ) || isset( $_GET['wplogin'] ) || isset( $_GET['admin'] ) || isset( $_GET['core'] ) ) {
+            return;
+        }
+
+        // Bypass if any security plugin secret parameter is present in URL (e.g. ?dakhelurl=1, ?secret=..., etc.)
+        if ( ! empty( $_GET ) ) {
+            foreach ( array_keys( $_GET ) as $get_key ) {
+                if ( false !== stripos( $get_key, 'dakhel' ) || false !== stripos( $get_key, 'secret' ) ) {
+                    return;
+                }
+            }
+        }
+
+        // Bypass if security plugin brute force cookie is present (e.g. All In One WP Security aios_brute_force_secret_...)
+        if ( ! empty( $_COOKIE ) ) {
+            foreach ( array_keys( $_COOKIE ) as $cookie_key ) {
+                if ( 0 === strpos( $cookie_key, 'aios_brute_force_secret_' ) || 0 === strpos( $cookie_key, 'aiowps_secret_' ) ) {
+                    return;
+                }
+            }
+        }
+
+        // Bypass if requested path is a custom/secret slug from a security plugin (e.g. /dakhel, /my-login, /secret-admin)
+        $request_uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+        $path        = (string) wp_parse_url( $request_uri, PHP_URL_PATH );
+        if ( ! empty( $path ) && false === strpos( $path, 'wp-login.php' ) ) {
+            return;
+        }
+
         // Check if dedicated page exists
         $page_id = absint( $settings['auth_page_id'] ?? 0 );
         if ( $page_id > 0 && get_post_status( $page_id ) === 'publish' ) {
@@ -294,6 +324,11 @@ class Payamakio_Module_Auth {
         } elseif ( function_exists( 'wc_get_page_permalink' ) ) {
             $target_url = wc_get_page_permalink( 'myaccount' );
         } else {
+            return;
+        }
+
+        // Prevent redirect loop
+        if ( untrailingslashit( $target_url ) === untrailingslashit( home_url( $path ) ) ) {
             return;
         }
 
