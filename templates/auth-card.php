@@ -79,7 +79,7 @@ $card_classes   = 'payamakio-auth-card' . ( $in_modal ? ' is-in-modal' : '' );
         <div class="payamakio-auth-tabs">
             <button type="button" class="payamakio-auth-tab-btn <?php echo ( 'otp' === $default_tab ) ? 'is-active' : ''; ?>" data-view="otp">
                 <?php echo Payamakio_Helper::icon( 'sms', 15 ); ?>
-                <span>کد یکبار مصرف (OTP)</span>
+                <span>ورود پیامکی</span>
             </button>
             <?php if ( $allow_password ) : ?>
                 <button type="button" class="payamakio-auth-tab-btn <?php echo ( 'password' === $default_tab ) ? 'is-active' : ''; ?>" data-view="password">

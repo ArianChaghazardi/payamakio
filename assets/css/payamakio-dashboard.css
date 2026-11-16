@@ -6,6 +6,22 @@
  * Brand: HectorTM
  */
 
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 #payamakio_dashboard_widget {
     container-type: inline-size;
     container-name: payamakio-dw;
@@ -17,8 +33,12 @@
     overflow: hidden !important;
 }
 
+.payamakio-dw-root,
+.payamakio-dw-root * {
+    font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, Tahoma, sans-serif !important;
+}
+
 .payamakio-dw-root {
-    font-family: inherit;
     direction: rtl;
     text-align: right;
     color: #1e293b;

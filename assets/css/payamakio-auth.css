@@ -6,7 +6,51 @@
  * Brand: HectorTM
  */
 
+/* --------------------------------------------------------------------------
+   Vazirmatn Persian Typography
+   -------------------------------------------------------------------------- */
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-Black.woff2') format('woff2');
+    font-weight: 800 900;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
+    --payamakio-font: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --payamakio-auth-primary: #ef4444;
     --payamakio-auth-primary-hover: #dc2626;
     --payamakio-auth-primary-light: #fee2e2;
@@ -24,6 +68,17 @@
 /* --------------------------------------------------------------------------
    Universal Reset against Elementor Kit, Theme and WooCommerce Button Leaks
    -------------------------------------------------------------------------- */
+html body .payamakio-auth-card,
+html body .payamakio-auth-card *,
+html body .payamakio-auth-modal,
+html body .payamakio-auth-modal *,
+html body .payamakio-wc-auth-wrapper,
+html body .payamakio-wc-auth-wrapper *,
+.payamakio-btn,
+.payamakio-btn * {
+    font-family: var(--payamakio-font) !important;
+}
+
 html body .payamakio-auth-card button,
 html body .payamakio-auth-modal button,
 html body .payamakio-wc-auth-wrapper button {

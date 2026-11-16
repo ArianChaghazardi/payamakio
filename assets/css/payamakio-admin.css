@@ -6,7 +6,32 @@
  * Brand: HectorTM
  */
 
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
+    --payamakio-font: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --payamakio-primary: #e11d48;
     --payamakio-primary-hover: #be123c;
     --payamakio-primary-light: #ffe4e6;
@@ -19,6 +44,11 @@
     --payamakio-slate-100: #f1f5f9;
     --payamakio-slate-50: #f8fafc;
     --payamakio-radius: 14px;
+}
+
+.toplevel_page_payamakio,
+.toplevel_page_payamakio * {
+    font-family: var(--payamakio-font) !important;
 }
 
 /* WordPress Admin Shell Full Bleed */

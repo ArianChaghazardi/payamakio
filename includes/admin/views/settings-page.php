@@ -254,7 +254,7 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
                         <div class="payamakio-col">
                             <label class="payamakio-label" for="auth_default_tab">تب پیش فرض هنگام باز شدن فرم</label>
                             <select id="auth_default_tab" name="payamakio[auth_default_tab]" class="payamakio-input">
-                                <option value="otp" <?php selected( $settings['auth_default_tab'] ?? 'otp', 'otp' ); ?>>ورود با رمز یکبار مصرف (OTP)</option>
+                                <option value="otp" <?php selected( $settings['auth_default_tab'] ?? 'otp', 'otp' ); ?>>ورود پیامکی (OTP)</option>
                                 <option value="password" <?php selected( $settings['auth_default_tab'] ?? 'otp', 'password' ); ?>>ورود با کلمه عبور سنتی</option>
                             </select>
                             <span class="payamakio-hint">کدام سربرگ در اولین بارگذاری فرم احراز هویت به صورت فعال نمایش داده شود.</span>
