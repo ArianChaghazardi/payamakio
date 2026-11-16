@@ -302,7 +302,10 @@ $logout_url     = wp_logout_url( home_url() );
                         </div>
 
                         <div class="payamakio-auth-sub-actions">
-                            <button type="button" class="payamakio-btn-back-to-login">بازگشت به صفحه ورود</button>
+                            <button type="button" class="payamakio-btn-back-to-login">
+                                <?php echo Payamakio_Helper::icon( 'arrow-right', 13 ); ?>
+                                <span>بازگشت به صفحه ورود</span>
+                            </button>
                         </div>
 
                         <button type="submit" class="payamakio-auth-submit payamakio-btn-primary">

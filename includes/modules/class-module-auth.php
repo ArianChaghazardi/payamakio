@@ -187,13 +187,14 @@ class Payamakio_Module_Auth {
         }
 
         $settings = get_option( 'payamakio_settings', array() );
-        if ( ( $settings['auth_override_wc'] ?? 'yes' ) !== 'yes' ) {
+        $override = $settings['auth_override_woo'] ?? ( $settings['auth_override_wc'] ?? 'yes' );
+        if ( 'yes' !== $override ) {
             return;
         }
 
         // Hide standard WooCommerce login columns with CSS and render Payamakio card
         echo '<style>.woocommerce-form-login, .woocommerce-form-register, .woocommerce-account .u-columns { display: none !important; }</style>';
-        echo '<div class="payamakio-wc-auth-wrapper" style="margin: 20px auto 40px auto; max-width: 480px;">';
+        echo '<div class="payamakio-wc-auth-wrapper">';
         self::render_auth_card( array(
             'redirect' => wc_get_page_permalink( 'myaccount' ),
         ) );

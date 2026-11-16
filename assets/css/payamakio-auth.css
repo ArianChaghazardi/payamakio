@@ -18,113 +18,178 @@
     --payamakio-auth-slate-200: #e2e8f0;
     --payamakio-auth-slate-100: #f1f5f9;
     --payamakio-auth-slate-50: #f8fafc;
-    --payamakio-auth-radius: 14px;
+    --payamakio-auth-radius: 16px;
 }
 
-/* Master Auth Card Container */
-.payamakio-auth-card {
-    background: #ffffff;
-    border-radius: var(--payamakio-auth-radius);
-    border: 1px solid var(--payamakio-auth-slate-200);
-    box-shadow: 0 12px 35px -10px rgba(15, 23, 42, 0.12);
-    width: 100%;
-    max-width: 460px;
-    margin: 0 auto;
-    padding: 30px 28px;
-    box-sizing: border-box;
-    direction: rtl;
-    text-align: right;
-    font-family: inherit;
-    color: var(--payamakio-auth-slate-800);
-    position: relative;
-    overflow: hidden;
+/* --------------------------------------------------------------------------
+   Universal Reset against Elementor Kit, Theme and WooCommerce Button Leaks
+   -------------------------------------------------------------------------- */
+html body .payamakio-auth-card button,
+html body .payamakio-auth-modal button,
+html body .payamakio-wc-auth-wrapper button {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: normal !important;
+    letter-spacing: normal !important;
+    transform: none !important;
+    box-sizing: border-box !important;
 }
 
-.payamakio-auth-card * {
-    box-sizing: border-box;
+/* --------------------------------------------------------------------------
+   Master Auth Card Container
+   -------------------------------------------------------------------------- */
+.payamakio-wc-auth-wrapper {
+    margin: 20px auto 70px auto !important;
+    max-width: 450px !important;
+    width: 100% !important;
+    padding: 0 12px !important;
+    box-sizing: border-box !important;
 }
 
-/* Header */
-.payamakio-auth-header {
-    text-align: center;
-    margin-bottom: 22px;
+html body .payamakio-auth-card {
+    background: #ffffff !important;
+    border-radius: var(--payamakio-auth-radius) !important;
+    border: 1px solid var(--payamakio-auth-slate-200) !important;
+    box-shadow: 0 12px 35px -8px rgba(15, 23, 42, 0.09) !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    margin: 0 auto !important;
+    padding: 28px 24px 24px 24px !important;
+    box-sizing: border-box !important;
+    direction: rtl !important;
+    text-align: right !important;
+    font-family: inherit !important;
+    color: var(--payamakio-auth-slate-800) !important;
+    position: relative !important;
+    overflow: hidden !important;
 }
 
-.payamakio-auth-logo-badge {
-    width: 54px;
-    height: 54px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    color: #ffffff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--payamakio-auth-glow);
-    margin-bottom: 12px;
+html body .payamakio-auth-card * {
+    box-sizing: border-box !important;
 }
 
-.payamakio-auth-title {
-    font-size: 1.28rem;
-    font-weight: 800;
-    color: var(--payamakio-auth-slate-900);
-    margin: 0 0 6px 0;
-    line-height: 1.3;
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+html body .payamakio-auth-card .payamakio-auth-header {
+    text-align: center !important;
+    margin-bottom: 20px !important;
 }
 
-.payamakio-auth-subtitle {
-    font-size: 0.86rem;
-    color: var(--payamakio-auth-slate-600);
-    margin: 0;
-    line-height: 1.4;
+html body .payamakio-auth-card .payamakio-auth-logo-badge {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 13px !important;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: #ffffff !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.28) !important;
+    margin-bottom: 10px !important;
 }
 
-/* Tab Switcher */
-.payamakio-auth-tabs {
-    display: flex;
-    background: var(--payamakio-auth-slate-100);
-    border-radius: 10px;
-    padding: 4px;
-    gap: 4px;
-    margin-bottom: 20px;
+html body .payamakio-auth-card .payamakio-auth-logo-badge svg {
+    width: 22px !important;
+    height: 22px !important;
+    stroke: #ffffff !important;
 }
 
-.payamakio-auth-tab-btn {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 8px 10px;
-    border: none;
-    background: transparent;
-    border-radius: 8px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--payamakio-auth-slate-600);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    line-height: 1;
+html body .payamakio-auth-card .payamakio-auth-title {
+    font-family: inherit !important;
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+    color: var(--payamakio-auth-slate-900) !important;
+    margin: 0 0 5px 0 !important;
+    line-height: 1.35 !important;
 }
 
-.payamakio-auth-tab-btn:hover {
-    color: var(--payamakio-auth-slate-900);
+html body .payamakio-auth-card .payamakio-auth-subtitle {
+    font-family: inherit !important;
+    font-size: 0.84rem !important;
+    color: var(--payamakio-auth-slate-600) !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
 }
 
-.payamakio-auth-tab-btn.is-active {
-    background: #ffffff;
-    color: var(--payamakio-auth-primary);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+/* --------------------------------------------------------------------------
+   Tab Switcher Navigation
+   -------------------------------------------------------------------------- */
+html body .payamakio-auth-card .payamakio-auth-tabs {
+    display: flex !important;
+    background: var(--payamakio-auth-slate-100) !important;
+    border-radius: 11px !important;
+    padding: 4px !important;
+    gap: 4px !important;
+    margin-bottom: 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
-/* Views & Form Fields */
+html body .payamakio-auth-card .payamakio-auth-tab-btn {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 9px 8px !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    border-radius: 8px !important;
+    font-family: inherit !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    color: var(--payamakio-auth-slate-600) !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    transition: all 0.2s ease !important;
+}
+
+html body .payamakio-auth-card .payamakio-auth-tab-btn span {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+html body .payamakio-auth-card .payamakio-auth-tab-btn svg {
+    width: 15px !important;
+    height: 15px !important;
+    flex-shrink: 0 !important;
+    stroke: currentColor !important;
+}
+
+html body .payamakio-auth-card .payamakio-auth-tab-btn:hover {
+    color: var(--payamakio-auth-slate-900) !important;
+}
+
+html body .payamakio-auth-card .payamakio-auth-tab-btn.is-active {
+    background: #ffffff !important;
+    color: var(--payamakio-auth-primary) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Views & Form Fields
+   -------------------------------------------------------------------------- */
 .payamakio-auth-view {
     display: none;
     animation: payamakioFadeIn 0.25s ease-out;
 }
 
 .payamakio-auth-view.is-active {
-    display: block;
+    display: block !important;
 }
 
 @keyframes payamakioFadeIn {
@@ -132,355 +197,506 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-.payamakio-auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+html body .payamakio-auth-card .payamakio-auth-form {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
 }
 
-.payamakio-auth-row {
-    display: flex;
-    gap: 12px;
+html body .payamakio-auth-card .payamakio-auth-row {
+    display: flex !important;
+    gap: 10px !important;
 }
 
-.payamakio-col-6 {
-    flex: 1;
+html body .payamakio-auth-card .payamakio-col-6 {
+    flex: 1 1 0% !important;
 }
 
-.payamakio-auth-field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+html body .payamakio-auth-card .payamakio-auth-field {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
 }
 
-.payamakio-label-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+html body .payamakio-auth-card .payamakio-label-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 2px !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
 }
 
-.payamakio-auth-label {
-    font-size: 0.84rem;
-    font-weight: 700;
-    color: var(--payamakio-auth-slate-800);
+html body .payamakio-auth-card .payamakio-auth-label {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: var(--payamakio-auth-slate-800) !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
 }
 
-.payamakio-auth-label .req {
-    color: var(--payamakio-auth-primary);
+html body .payamakio-auth-card .payamakio-auth-label .req {
+    color: var(--payamakio-auth-primary) !important;
 }
 
-.payamakio-auth-input-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
+/* Secondary switch links */
+html body .payamakio-auth-card .payamakio-btn-switch-reset {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--payamakio-auth-primary) !important;
+    font-family: inherit !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    transition: color 0.2s ease !important;
 }
 
-.payamakio-auth-input {
-    width: 100%;
-    height: 46px;
-    padding: 10px 14px;
-    background: #ffffff;
-    border: 1px solid var(--payamakio-auth-slate-200);
-    border-radius: 9px;
-    font-size: 0.92rem;
-    color: var(--payamakio-auth-slate-900);
-    transition: all 0.2s ease;
-    outline: none;
-    font-family: inherit;
+html body .payamakio-auth-card .payamakio-btn-switch-reset:hover {
+    color: var(--payamakio-auth-primary-hover) !important;
+    text-decoration: underline !important;
+    background: transparent !important;
 }
 
-.payamakio-auth-input:focus {
-    border-color: var(--payamakio-auth-primary);
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+html body .payamakio-auth-card .payamakio-btn-back-to-login {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--payamakio-auth-primary) !important;
+    font-family: inherit !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    transition: color 0.2s ease !important;
 }
 
-.payamakio-auth-input-wrap .payamakio-input-icon {
-    position: absolute;
-    right: 12px;
-    color: #94a3b8;
-    display: flex;
-    align-items: center;
-    pointer-events: none;
+html body .payamakio-auth-card .payamakio-btn-back-to-login:hover {
+    color: var(--payamakio-auth-primary-hover) !important;
+    text-decoration: underline !important;
+    background: transparent !important;
 }
 
-.payamakio-auth-input-wrap:has(.payamakio-input-icon) .payamakio-auth-input {
-    padding-right: 38px;
+html body .payamakio-auth-card .payamakio-btn-back-to-login svg {
+    stroke: currentColor !important;
 }
 
-/* Phone input with Iran flag prefix */
-.payamakio-phone-input-wrap .payamakio-country-badge {
-    position: absolute;
-    left: 8px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 8px;
-    background: var(--payamakio-auth-slate-100);
-    border: 1px solid var(--payamakio-auth-slate-200);
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--payamakio-auth-slate-700);
-    pointer-events: none;
+html body .payamakio-auth-card .payamakio-auth-sub-actions {
+    display: flex !important;
+    justify-content: flex-start !important;
+    margin: 0 0 4px 0 !important;
 }
 
-.payamakio-phone-input-wrap .payamakio-input-mobile {
-    padding-left: 74px;
-    letter-spacing: 1px;
-    font-weight: 600;
+html body .payamakio-auth-card .payamakio-auth-hint {
+    font-size: 11.5px !important;
+    color: var(--payamakio-auth-slate-600) !important;
+    margin-top: 2px !important;
+    line-height: 1.45 !important;
 }
 
-.payamakio-auth-hint {
-    font-size: 0.76rem;
-    color: var(--payamakio-auth-slate-600);
-    line-height: 1.4;
+/* --------------------------------------------------------------------------
+   Input Wrappers and Base Inputs
+   -------------------------------------------------------------------------- */
+html body .payamakio-auth-card .payamakio-auth-input-wrap {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
 }
 
-/* Password Toggle Eye */
-.payamakio-pwd-toggle {
-    position: absolute;
-    left: 10px;
-    background: none;
-    border: none;
-    color: #94a3b8;
-    cursor: pointer;
-    padding: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.15s ease;
+html body .payamakio-auth-card input.payamakio-auth-input {
+    width: 100% !important;
+    height: 46px !important;
+    padding: 10px 14px !important;
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    color: var(--payamakio-auth-slate-900) !important;
+    transition: all 0.2s ease !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-family: inherit !important;
+    box-sizing: border-box !important;
 }
 
-.payamakio-pwd-toggle:hover {
-    color: var(--payamakio-auth-slate-900);
+html body .payamakio-auth-card input.payamakio-auth-input:focus {
+    border-color: var(--payamakio-auth-primary) !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
 }
 
-.payamakio-pwd-input {
-    padding-left: 38px;
+html body .payamakio-auth-card .payamakio-input-icon {
+    position: absolute !important;
+    right: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    color: #94a3b8 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
 }
 
-/* Buttons */
-.payamakio-auth-submit {
-    height: 48px;
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: none;
-    border-radius: 9px;
-    font-size: 0.92rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    line-height: 1;
-    font-family: inherit;
-    position: relative;
-    overflow: hidden;
+html body .payamakio-auth-card .payamakio-auth-input-wrap:has(.payamakio-input-icon) input.payamakio-auth-input {
+    padding-right: 38px !important;
 }
 
-.payamakio-btn-primary {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    color: #ffffff;
-    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+/* Password Eye Toggle */
+html body .payamakio-auth-card .payamakio-pwd-toggle {
+    position: absolute !important;
+    left: 10px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 28px !important;
+    height: 28px !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #94a3b8 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 5 !important;
+    transition: all 0.2s ease !important;
 }
 
-.payamakio-btn-primary:hover {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.45);
-    transform: translateY(-1px);
+html body .payamakio-auth-card .payamakio-pwd-toggle:hover {
+    color: #475569 !important;
+    background: #f1f5f9 !important;
 }
 
-.payamakio-btn-primary:active {
-    transform: translateY(0);
+html body .payamakio-auth-card .payamakio-pwd-toggle svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke: currentColor !important;
 }
 
-/* Button Spinner */
+html body .payamakio-auth-card input.payamakio-auth-input.payamakio-pwd-input {
+    padding-left: 42px !important;
+    padding-right: 38px !important;
+}
+
+/* --------------------------------------------------------------------------
+   Phone Input & Country Prefix
+   -------------------------------------------------------------------------- */
+html body .payamakio-auth-card .payamakio-phone-input-wrap {
+    display: flex !important;
+    align-items: stretch !important;
+    direction: rtl !important;
+    width: 100% !important;
+}
+
+html body .payamakio-auth-card .payamakio-country-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    padding: 0 10px !important;
+    background: #f8fafc !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-left: none !important;
+    border-radius: 0 10px 10px 0 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+    height: 46px !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    user-select: none !important;
+}
+
+html body .payamakio-auth-card .payamakio-flag-iran {
+    font-size: 15px !important;
+    line-height: 1 !important;
+}
+
+html body .payamakio-auth-card .payamakio-prefix {
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+    letter-spacing: 0.5px !important;
+}
+
+html body .payamakio-auth-card .payamakio-phone-input-wrap input.payamakio-auth-input {
+    border-radius: 10px 0 0 10px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    height: 46px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    direction: ltr !important;
+    text-align: left !important;
+    padding: 10px 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+html body .payamakio-auth-card .payamakio-phone-input-wrap input.payamakio-auth-input:focus {
+    border-color: var(--payamakio-auth-primary) !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Submit Buttons
+   -------------------------------------------------------------------------- */
+html body .payamakio-auth-card .payamakio-auth-submit {
+    width: 100% !important;
+    height: 48px !important;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 11px !important;
+    font-family: inherit !important;
+    font-size: 14.5px !important;
+    font-weight: 800 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.28) !important;
+    transition: all 0.2s ease !important;
+    margin-top: 6px !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+}
+
+html body .payamakio-auth-card .payamakio-auth-submit:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.38) !important;
+}
+
+html body .payamakio-auth-card .payamakio-auth-submit:active {
+    transform: translateY(0) !important;
+}
+
+html body .payamakio-auth-card .payamakio-auth-submit:disabled {
+    opacity: 0.65 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+html body .payamakio-auth-card .payamakio-auth-submit svg {
+    stroke: #ffffff !important;
+}
+
+/* Spinner */
 .payamakio-spinner {
     display: none;
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
     border-top-color: #ffffff;
     border-radius: 50%;
-    animation: payamakioSpin 0.7s linear infinite;
+    animation: payamakioSpin 0.75s linear infinite;
 }
 
-.payamakio-auth-submit.is-loading .payamakio-btn-text,
-.payamakio-auth-submit.is-loading .payamakio-btn-icon {
-    display: none;
+.is-loading .payamakio-spinner {
+    display: inline-block !important;
 }
 
-.payamakio-auth-submit.is-loading .payamakio-spinner {
-    display: inline-block;
+.is-loading .payamakio-btn-icon {
+    display: none !important;
 }
 
 @keyframes payamakioSpin {
     to { transform: rotate(360deg); }
 }
 
-/* Step 2: Digits Input Boxes */
-.payamakio-auth-step2-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px;
-    background: var(--payamakio-auth-slate-50);
-    border: 1px solid var(--payamakio-auth-slate-200);
-    border-radius: 8px;
-    font-size: 0.8rem;
-    gap: 8px;
+/* --------------------------------------------------------------------------
+   Step 2: OTP Verification Digit Boxes
+   -------------------------------------------------------------------------- */
+html body .payamakio-auth-card .payamakio-auth-step2-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    margin-bottom: 14px !important;
+    padding: 10px 12px !important;
+    background: #f8fafc !important;
+    border-radius: 10px !important;
+    border: 1px solid #e2e8f0 !important;
 }
 
-.payamakio-auth-sent-info {
-    color: var(--payamakio-auth-slate-700);
+html body .payamakio-auth-card .payamakio-auth-sent-info {
+    font-size: 0.8rem !important;
+    color: #475569 !important;
 }
 
-.payamakio-auth-sent-info strong {
-    color: var(--payamakio-auth-slate-900);
-    letter-spacing: 0.5px;
+html body .payamakio-auth-card .payamakio-auth-sent-number {
+    color: var(--payamakio-auth-slate-900) !important;
+    font-weight: 800 !important;
 }
 
-.payamakio-auth-btn-edit-phone {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    border: none;
-    background: none;
-    color: var(--payamakio-auth-primary);
-    font-size: 0.78rem;
-    font-weight: 700;
-    cursor: pointer;
-    padding: 0;
+html body .payamakio-auth-card .payamakio-auth-btn-edit-phone {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--payamakio-auth-primary) !important;
+    font-family: inherit !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    transition: color 0.2s ease !important;
 }
 
-.payamakio-auth-btn-edit-phone:hover {
-    text-decoration: underline;
+html body .payamakio-auth-card .payamakio-auth-btn-edit-phone:hover {
+    color: var(--payamakio-auth-primary-hover) !important;
+    text-decoration: underline !important;
 }
 
-.payamakio-digit-inputs {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 8px 0;
+html body .payamakio-auth-card .payamakio-auth-btn-edit-phone svg {
+    stroke: currentColor !important;
 }
 
-.payamakio-digit-box {
-    width: 52px;
-    height: 56px;
-    border: 2px solid var(--payamakio-auth-slate-200);
-    border-radius: 10px;
-    background: #ffffff;
-    font-size: 1.5rem;
-    font-weight: 800;
-    text-align: center;
-    color: var(--payamakio-auth-slate-900);
-    transition: all 0.2s ease;
-    outline: none;
-    font-family: monospace, inherit;
+html body .payamakio-auth-card .payamakio-digit-inputs {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    direction: ltr !important;
+    margin: 10px 0 !important;
 }
 
-.payamakio-digit-box:focus {
-    border-color: var(--payamakio-auth-primary);
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18);
-    transform: scale(1.04);
+html body .payamakio-auth-card .payamakio-digit-box {
+    width: 44px !important;
+    height: 50px !important;
+    font-size: 1.3rem !important;
+    font-weight: 800 !important;
+    color: var(--payamakio-auth-slate-900) !important;
+    background: #f8fafc !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 10px !important;
+    text-align: center !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transition: all 0.2s ease !important;
+    font-family: inherit !important;
 }
 
-.payamakio-digit-box.is-filled {
-    border-color: #cbd5e1;
-    background: var(--payamakio-auth-slate-50);
+html body .payamakio-auth-card .payamakio-digit-box:focus {
+    border-color: var(--payamakio-auth-primary) !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
 }
 
-/* Resend Countdown Row */
-.payamakio-auth-resend-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px 0;
-    font-size: 0.82rem;
-    min-height: 28px;
+html body .payamakio-auth-card .payamakio-digit-box.is-filled {
+    border-color: #94a3b8 !important;
+    background: #ffffff !important;
 }
 
-.payamakio-auth-timer {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--payamakio-auth-slate-600);
+/* Resend Row */
+html body .payamakio-auth-card .payamakio-auth-resend-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin: 10px 0 14px 0 !important;
+    font-size: 0.8rem !important;
 }
 
-.payamakio-timer-countdown {
-    color: var(--payamakio-auth-primary);
-    font-weight: 800;
-    letter-spacing: 1px;
+html body .payamakio-auth-card .payamakio-auth-timer {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    color: #64748b !important;
+    font-size: 0.8rem !important;
 }
 
-.payamakio-auth-btn-resend {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    border: none;
-    background: none;
-    color: var(--payamakio-auth-primary);
-    font-size: 0.82rem;
-    font-weight: 700;
-    cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 6px;
+html body .payamakio-auth-card .payamakio-timer-countdown {
+    color: var(--payamakio-auth-slate-800) !important;
+    font-weight: 800 !important;
 }
 
-.payamakio-auth-btn-resend:hover {
-    background: var(--payamakio-auth-primary-light);
+html body .payamakio-auth-card .payamakio-auth-btn-resend {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--payamakio-auth-primary) !important;
+    font-family: inherit !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
 }
 
-/* Secondary switch links */
-.payamakio-btn-switch-reset,
-.payamakio-btn-back-to-login {
-    border: none;
-    background: none;
-    color: var(--payamakio-auth-primary);
-    font-size: 0.78rem;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0;
+html body .payamakio-auth-card .payamakio-auth-btn-resend:hover {
+    color: var(--payamakio-auth-primary-hover) !important;
+    text-decoration: underline !important;
 }
 
-.payamakio-btn-switch-reset:hover,
-.payamakio-btn-back-to-login:hover {
-    text-decoration: underline;
+html body .payamakio-auth-card .payamakio-auth-btn-resend svg {
+    stroke: currentColor !important;
 }
 
-.payamakio-auth-options-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.82rem;
+/* --------------------------------------------------------------------------
+   Options Row (Remember me)
+   -------------------------------------------------------------------------- */
+html body .payamakio-auth-card .payamakio-auth-options-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin: 2px 0 !important;
 }
 
-.payamakio-auth-checkbox-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    color: var(--payamakio-auth-slate-700);
+html body .payamakio-auth-card .payamakio-auth-checkbox-label {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 0.82rem !important;
+    color: #475569 !important;
+    cursor: pointer !important;
+    user-select: none !important;
 }
 
-.payamakio-auth-sub-actions {
-    display: flex;
-    justify-content: flex-end;
+html body .payamakio-auth-card .payamakio-auth-checkbox-label input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px !important;
+    accent-color: var(--payamakio-auth-primary) !important;
+    margin: 0 !important;
+    cursor: pointer !important;
 }
 
-/* Alerts */
-.payamakio-auth-alert {
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    line-height: 1.4;
-    animation: payamakioAlertSlide 0.25s ease-out;
+/* --------------------------------------------------------------------------
+   Alerts
+   -------------------------------------------------------------------------- */
+html body .payamakio-auth-card .payamakio-auth-alert {
+    padding: 10px 14px !important;
+    border-radius: 9px !important;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    line-height: 1.4 !important;
+    animation: payamakioAlertSlide 0.25s ease-out !important;
 }
 
 @keyframes payamakioAlertSlide {
@@ -488,96 +704,104 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-.payamakio-auth-alert.alert-error {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #991b1b;
+html body .payamakio-auth-card .payamakio-auth-alert.alert-error {
+    background: #fef2f2 !important;
+    border: 1px solid #fecaca !important;
+    color: #991b1b !important;
 }
 
-.payamakio-auth-alert.alert-success {
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #166534;
+html body .payamakio-auth-card .payamakio-auth-alert.alert-success {
+    background: #f0fdf4 !important;
+    border: 1px solid #bbf7d0 !important;
+    color: #166534 !important;
 }
 
-/* Footer & Security badge */
-.payamakio-auth-footer {
-    margin-top: 22px;
-    padding-top: 14px;
-    border-top: 1px solid var(--payamakio-auth-slate-100);
-    text-align: center;
+/* --------------------------------------------------------------------------
+   Footer & Security Badge
+   -------------------------------------------------------------------------- */
+html body .payamakio-auth-card .payamakio-auth-footer {
+    margin-top: 18px !important;
+    padding-top: 12px !important;
+    border-top: 1px solid var(--payamakio-auth-slate-100) !important;
+    text-align: center !important;
 }
 
-.payamakio-auth-secured {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.74rem;
-    color: #94a3b8;
-    font-weight: 600;
+html body .payamakio-auth-card .payamakio-auth-secured {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-size: 0.74rem !important;
+    color: #94a3b8 !important;
+    font-weight: 600 !important;
 }
 
-/* Logged In State */
-.payamakio-auth-logged-in {
-    text-align: center;
-    padding: 10px 0;
+html body .payamakio-auth-card .payamakio-auth-secured svg {
+    stroke: currentColor !important;
 }
 
-.payamakio-auth-avatar-wrap img {
-    border-radius: 50%;
-    border: 3px solid var(--payamakio-auth-primary-light);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+/* --------------------------------------------------------------------------
+   Logged In State
+   -------------------------------------------------------------------------- */
+html body .payamakio-auth-card .payamakio-auth-logged-in {
+    text-align: center !important;
+    padding: 10px 0 !important;
 }
 
-.payamakio-auth-logged-title {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--payamakio-auth-slate-900);
-    margin: 12px 0 6px 0;
+html body .payamakio-auth-card .payamakio-auth-avatar-wrap img {
+    border-radius: 50% !important;
+    border: 3px solid var(--payamakio-auth-primary-light) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
 }
 
-.payamakio-auth-logged-desc {
-    font-size: 0.88rem;
-    color: var(--payamakio-auth-slate-600);
-    margin: 0 0 20px 0;
+html body .payamakio-auth-card .payamakio-auth-logged-title {
+    font-size: 1.25rem !important;
+    font-weight: 800 !important;
+    color: var(--payamakio-auth-slate-900) !important;
+    margin: 12px 0 6px 0 !important;
 }
 
-.payamakio-auth-logged-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+html body .payamakio-auth-card .payamakio-auth-logged-desc {
+    font-size: 0.88rem !important;
+    color: var(--payamakio-auth-slate-600) !important;
+    margin: 0 0 20px 0 !important;
 }
 
-.payamakio-auth-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 9px 16px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.2s ease;
+html body .payamakio-auth-card .payamakio-auth-logged-actions {
+    display: flex !important;
+    gap: 10px !important;
+    justify-content: center !important;
 }
 
-.payamakio-auth-btn-primary {
-    background: var(--payamakio-auth-primary);
+html body .payamakio-auth-card .payamakio-auth-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 9px 16px !important;
+    border-radius: 9px !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+}
+
+html body .payamakio-auth-card .payamakio-auth-btn-primary {
+    background: var(--payamakio-auth-primary) !important;
     color: #ffffff !important;
 }
 
-.payamakio-auth-btn-primary:hover {
-    background: var(--payamakio-auth-primary-hover);
+html body .payamakio-auth-card .payamakio-auth-btn-primary:hover {
+    background: var(--payamakio-auth-primary-hover) !important;
 }
 
-.payamakio-auth-btn-outline {
-    background: transparent;
-    border: 1px solid var(--payamakio-auth-slate-200);
+html body .payamakio-auth-card .payamakio-auth-btn-outline {
+    background: transparent !important;
+    border: 1px solid var(--payamakio-auth-slate-200) !important;
     color: var(--payamakio-auth-slate-700) !important;
 }
 
-.payamakio-auth-btn-outline:hover {
-    background: var(--payamakio-auth-slate-100);
+html body .payamakio-auth-card .payamakio-auth-btn-outline:hover {
+    background: var(--payamakio-auth-slate-100) !important;
     color: var(--payamakio-auth-slate-900) !important;
 }
 
@@ -585,62 +809,71 @@
    Modal Popup Styles
    -------------------------------------------------------------------------- */
 .payamakio-auth-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 999999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    box-sizing: border-box;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
 }
 
 .payamakio-auth-modal-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.65);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    animation: payamakioBackdropFade 0.25s ease-out;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(15, 23, 42, 0.65) !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+    animation: payamakioBackdropFade 0.25s ease-out !important;
 }
 
 .payamakio-auth-modal-dialog {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    max-width: 460px;
-    animation: payamakioModalZoom 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative !important;
+    z-index: 2 !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    box-sizing: border-box !important;
+    animation: payamakioModalZoom 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-.payamakio-auth-modal-close {
-    position: absolute;
-    top: -14px;
-    left: -14px;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: #ffffff;
-    border: 1px solid var(--payamakio-auth-slate-200);
-    color: var(--payamakio-auth-slate-700);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: all 0.2s ease;
-    z-index: 10;
+html body .payamakio-auth-modal .payamakio-auth-modal-close {
+    position: absolute !important;
+    top: -14px !important;
+    left: -14px !important;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #475569 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    transition: all 0.2s ease !important;
+    z-index: 100 !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
-.payamakio-auth-modal-close:hover {
-    background: var(--payamakio-auth-primary);
-    color: #ffffff;
-    transform: rotate(90deg);
+html body .payamakio-auth-modal .payamakio-auth-modal-close:hover {
+    background: var(--payamakio-auth-primary) !important;
+    color: #ffffff !important;
+    transform: rotate(90deg) !important;
+}
+
+html body .payamakio-auth-modal .payamakio-auth-modal-close svg {
+    width: 18px !important;
+    height: 18px !important;
+    stroke: currentColor !important;
 }
 
 @keyframes payamakioBackdropFade {
@@ -654,22 +887,117 @@
 }
 
 /* --------------------------------------------------------------------------
-   Responsive Rules
+   Mobile & Responsive Rules
    -------------------------------------------------------------------------- */
 @media (max-width: 480px) {
-    .payamakio-auth-card {
-        padding: 24px 18px;
+    .payamakio-wc-auth-wrapper {
+        margin: 10px auto 65px auto !important;
+        padding: 0 8px !important;
     }
-    .payamakio-digit-box {
-        width: 44px;
-        height: 48px;
-        font-size: 1.3rem;
+
+    html body .payamakio-auth-card {
+        padding: 22px 18px 20px 18px !important;
+        border-radius: 14px !important;
+        box-shadow: 0 8px 25px -6px rgba(15, 23, 42, 0.08) !important;
     }
-    .payamakio-auth-tabs {
-        font-size: 0.78rem;
+
+    html body .payamakio-auth-card .payamakio-auth-header {
+        margin-bottom: 16px !important;
     }
-    .payamakio-auth-modal-close {
-        top: 8px;
-        left: 8px;
+
+    html body .payamakio-auth-card .payamakio-auth-logo-badge {
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 12px !important;
+        margin-bottom: 8px !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-auth-logo-badge svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-auth-title {
+        font-size: 1.12rem !important;
+        line-height: 1.35 !important;
+        margin-bottom: 4px !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-auth-subtitle {
+        font-size: 0.78rem !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-auth-tabs {
+        margin-bottom: 16px !important;
+        padding: 3px !important;
+        gap: 3px !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-auth-tab-btn {
+        font-size: 11.5px !important;
+        padding: 8px 6px !important;
+        gap: 4px !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-auth-tab-btn svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-auth-row {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-digit-inputs {
+        gap: 6px !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-digit-box {
+        width: 44px !important;
+        height: 48px !important;
+        font-size: 1.25rem !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-auth-submit {
+        height: 46px !important;
+        font-size: 14px !important;
+    }
+
+    html body .payamakio-auth-modal-dialog {
+        max-width: 95vw !important;
+    }
+
+    html body .payamakio-auth-modal .payamakio-auth-modal-close {
+        top: 8px !important;
+        left: 8px !important;
+        width: 30px !important;
+        height: 30px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    html body .payamakio-auth-card {
+        padding: 18px 14px 16px 14px !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-auth-title {
+        font-size: 1.05rem !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-auth-tab-btn {
+        font-size: 10.5px !important;
+        padding: 7px 4px !important;
+        gap: 3px !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-digit-inputs {
+        gap: 4px !important;
+    }
+
+    html body .payamakio-auth-card .payamakio-digit-box {
+        width: 38px !important;
+        height: 44px !important;
+        font-size: 1.15rem !important;
     }
 }

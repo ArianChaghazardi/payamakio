@@ -485,7 +485,7 @@
             $('body').removeClass('payamakio-modal-open');
         }
 
-        $(document).on('click', '.payamakio-auth-modal-btn, a[href="#payamakio-auth"]', function (e) {
+        $(document).on('click', '.payamakio-open-modal, .payamakio-auth-modal-btn, a[href="#payamakio-auth"]', function (e) {
             e.preventDefault();
             openModal();
         });
