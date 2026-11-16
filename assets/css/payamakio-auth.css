@@ -1,0 +1,675 @@
+/**
+ * Payamakio Authentication Stylesheet
+ * Digits-style responsive SMS OTP login, registration, password login, and modal popup
+ * Dark Slate & Radiant Crimson Theme
+ * Author: Arian Chaghazardi
+ * Brand: HectorTM
+ */
+
+:root {
+    --payamakio-auth-primary: #ef4444;
+    --payamakio-auth-primary-hover: #dc2626;
+    --payamakio-auth-primary-light: #fee2e2;
+    --payamakio-auth-glow: 0 10px 25px -5px rgba(239, 68, 68, 0.35);
+    --payamakio-auth-slate-900: #0f172a;
+    --payamakio-auth-slate-800: #1e293b;
+    --payamakio-auth-slate-700: #334155;
+    --payamakio-auth-slate-600: #475569;
+    --payamakio-auth-slate-200: #e2e8f0;
+    --payamakio-auth-slate-100: #f1f5f9;
+    --payamakio-auth-slate-50: #f8fafc;
+    --payamakio-auth-radius: 14px;
+}
+
+/* Master Auth Card Container */
+.payamakio-auth-card {
+    background: #ffffff;
+    border-radius: var(--payamakio-auth-radius);
+    border: 1px solid var(--payamakio-auth-slate-200);
+    box-shadow: 0 12px 35px -10px rgba(15, 23, 42, 0.12);
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 30px 28px;
+    box-sizing: border-box;
+    direction: rtl;
+    text-align: right;
+    font-family: inherit;
+    color: var(--payamakio-auth-slate-800);
+    position: relative;
+    overflow: hidden;
+}
+
+.payamakio-auth-card * {
+    box-sizing: border-box;
+}
+
+/* Header */
+.payamakio-auth-header {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.payamakio-auth-logo-badge {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--payamakio-auth-glow);
+    margin-bottom: 12px;
+}
+
+.payamakio-auth-title {
+    font-size: 1.28rem;
+    font-weight: 800;
+    color: var(--payamakio-auth-slate-900);
+    margin: 0 0 6px 0;
+    line-height: 1.3;
+}
+
+.payamakio-auth-subtitle {
+    font-size: 0.86rem;
+    color: var(--payamakio-auth-slate-600);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Tab Switcher */
+.payamakio-auth-tabs {
+    display: flex;
+    background: var(--payamakio-auth-slate-100);
+    border-radius: 10px;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 20px;
+}
+
+.payamakio-auth-tab-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 10px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--payamakio-auth-slate-600);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.payamakio-auth-tab-btn:hover {
+    color: var(--payamakio-auth-slate-900);
+}
+
+.payamakio-auth-tab-btn.is-active {
+    background: #ffffff;
+    color: var(--payamakio-auth-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Views & Form Fields */
+.payamakio-auth-view {
+    display: none;
+    animation: payamakioFadeIn 0.25s ease-out;
+}
+
+.payamakio-auth-view.is-active {
+    display: block;
+}
+
+@keyframes payamakioFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.payamakio-auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.payamakio-auth-row {
+    display: flex;
+    gap: 12px;
+}
+
+.payamakio-col-6 {
+    flex: 1;
+}
+
+.payamakio-auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.payamakio-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.payamakio-auth-label {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--payamakio-auth-slate-800);
+}
+
+.payamakio-auth-label .req {
+    color: var(--payamakio-auth-primary);
+}
+
+.payamakio-auth-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.payamakio-auth-input {
+    width: 100%;
+    height: 46px;
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 1px solid var(--payamakio-auth-slate-200);
+    border-radius: 9px;
+    font-size: 0.92rem;
+    color: var(--payamakio-auth-slate-900);
+    transition: all 0.2s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+.payamakio-auth-input:focus {
+    border-color: var(--payamakio-auth-primary);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.payamakio-auth-input-wrap .payamakio-input-icon {
+    position: absolute;
+    right: 12px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.payamakio-auth-input-wrap:has(.payamakio-input-icon) .payamakio-auth-input {
+    padding-right: 38px;
+}
+
+/* Phone input with Iran flag prefix */
+.payamakio-phone-input-wrap .payamakio-country-badge {
+    position: absolute;
+    left: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: var(--payamakio-auth-slate-100);
+    border: 1px solid var(--payamakio-auth-slate-200);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--payamakio-auth-slate-700);
+    pointer-events: none;
+}
+
+.payamakio-phone-input-wrap .payamakio-input-mobile {
+    padding-left: 74px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.payamakio-auth-hint {
+    font-size: 0.76rem;
+    color: var(--payamakio-auth-slate-600);
+    line-height: 1.4;
+}
+
+/* Password Toggle Eye */
+.payamakio-pwd-toggle {
+    position: absolute;
+    left: 10px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease;
+}
+
+.payamakio-pwd-toggle:hover {
+    color: var(--payamakio-auth-slate-900);
+}
+
+.payamakio-pwd-input {
+    padding-left: 38px;
+}
+
+/* Buttons */
+.payamakio-auth-submit {
+    height: 48px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    border-radius: 9px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1;
+    font-family: inherit;
+    position: relative;
+    overflow: hidden;
+}
+
+.payamakio-btn-primary {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+}
+
+.payamakio-btn-primary:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.45);
+    transform: translateY(-1px);
+}
+
+.payamakio-btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Button Spinner */
+.payamakio-spinner {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: payamakioSpin 0.7s linear infinite;
+}
+
+.payamakio-auth-submit.is-loading .payamakio-btn-text,
+.payamakio-auth-submit.is-loading .payamakio-btn-icon {
+    display: none;
+}
+
+.payamakio-auth-submit.is-loading .payamakio-spinner {
+    display: inline-block;
+}
+
+@keyframes payamakioSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* Step 2: Digits Input Boxes */
+.payamakio-auth-step2-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: var(--payamakio-auth-slate-50);
+    border: 1px solid var(--payamakio-auth-slate-200);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    gap: 8px;
+}
+
+.payamakio-auth-sent-info {
+    color: var(--payamakio-auth-slate-700);
+}
+
+.payamakio-auth-sent-info strong {
+    color: var(--payamakio-auth-slate-900);
+    letter-spacing: 0.5px;
+}
+
+.payamakio-auth-btn-edit-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: none;
+    background: none;
+    color: var(--payamakio-auth-primary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+}
+
+.payamakio-auth-btn-edit-phone:hover {
+    text-decoration: underline;
+}
+
+.payamakio-digit-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 8px 0;
+}
+
+.payamakio-digit-box {
+    width: 52px;
+    height: 56px;
+    border: 2px solid var(--payamakio-auth-slate-200);
+    border-radius: 10px;
+    background: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-align: center;
+    color: var(--payamakio-auth-slate-900);
+    transition: all 0.2s ease;
+    outline: none;
+    font-family: monospace, inherit;
+}
+
+.payamakio-digit-box:focus {
+    border-color: var(--payamakio-auth-primary);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18);
+    transform: scale(1.04);
+}
+
+.payamakio-digit-box.is-filled {
+    border-color: #cbd5e1;
+    background: var(--payamakio-auth-slate-50);
+}
+
+/* Resend Countdown Row */
+.payamakio-auth-resend-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 0;
+    font-size: 0.82rem;
+    min-height: 28px;
+}
+
+.payamakio-auth-timer {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--payamakio-auth-slate-600);
+}
+
+.payamakio-timer-countdown {
+    color: var(--payamakio-auth-primary);
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.payamakio-auth-btn-resend {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: none;
+    background: none;
+    color: var(--payamakio-auth-primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.payamakio-auth-btn-resend:hover {
+    background: var(--payamakio-auth-primary-light);
+}
+
+/* Secondary switch links */
+.payamakio-btn-switch-reset,
+.payamakio-btn-back-to-login {
+    border: none;
+    background: none;
+    color: var(--payamakio-auth-primary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+}
+
+.payamakio-btn-switch-reset:hover,
+.payamakio-btn-back-to-login:hover {
+    text-decoration: underline;
+}
+
+.payamakio-auth-options-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+}
+
+.payamakio-auth-checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    color: var(--payamakio-auth-slate-700);
+}
+
+.payamakio-auth-sub-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Alerts */
+.payamakio-auth-alert {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.4;
+    animation: payamakioAlertSlide 0.25s ease-out;
+}
+
+@keyframes payamakioAlertSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.payamakio-auth-alert.alert-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+.payamakio-auth-alert.alert-success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+}
+
+/* Footer & Security badge */
+.payamakio-auth-footer {
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid var(--payamakio-auth-slate-100);
+    text-align: center;
+}
+
+.payamakio-auth-secured {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.74rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+/* Logged In State */
+.payamakio-auth-logged-in {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.payamakio-auth-avatar-wrap img {
+    border-radius: 50%;
+    border: 3px solid var(--payamakio-auth-primary-light);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.payamakio-auth-logged-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--payamakio-auth-slate-900);
+    margin: 12px 0 6px 0;
+}
+
+.payamakio-auth-logged-desc {
+    font-size: 0.88rem;
+    color: var(--payamakio-auth-slate-600);
+    margin: 0 0 20px 0;
+}
+
+.payamakio-auth-logged-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.payamakio-auth-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.payamakio-auth-btn-primary {
+    background: var(--payamakio-auth-primary);
+    color: #ffffff !important;
+}
+
+.payamakio-auth-btn-primary:hover {
+    background: var(--payamakio-auth-primary-hover);
+}
+
+.payamakio-auth-btn-outline {
+    background: transparent;
+    border: 1px solid var(--payamakio-auth-slate-200);
+    color: var(--payamakio-auth-slate-700) !important;
+}
+
+.payamakio-auth-btn-outline:hover {
+    background: var(--payamakio-auth-slate-100);
+    color: var(--payamakio-auth-slate-900) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Modal Popup Styles
+   -------------------------------------------------------------------------- */
+.payamakio-auth-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.payamakio-auth-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    animation: payamakioBackdropFade 0.25s ease-out;
+}
+
+.payamakio-auth-modal-dialog {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 460px;
+    animation: payamakioModalZoom 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.payamakio-auth-modal-close {
+    position: absolute;
+    top: -14px;
+    left: -14px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid var(--payamakio-auth-slate-200);
+    color: var(--payamakio-auth-slate-700);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.payamakio-auth-modal-close:hover {
+    background: var(--payamakio-auth-primary);
+    color: #ffffff;
+    transform: rotate(90deg);
+}
+
+@keyframes payamakioBackdropFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes payamakioModalZoom {
+    from { opacity: 0; transform: scale(0.92) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Rules
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+    .payamakio-auth-card {
+        padding: 24px 18px;
+    }
+    .payamakio-digit-box {
+        width: 44px;
+        height: 48px;
+        font-size: 1.3rem;
+    }
+    .payamakio-auth-tabs {
+        font-size: 0.78rem;
+    }
+    .payamakio-auth-modal-close {
+        top: 8px;
+        left: 8px;
+    }
+}

@@ -229,4 +229,38 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    // 1-Click Create Dedicated Auth Page
+    $('#payamakio-btn-create-auth-page').on('click', function (e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var origHtml = $btn.html();
+
+        $btn.prop('disabled', true).html('<span class="payamakio-spinner" style="display:inline-block;width:12px;height:12px;margin-left:6px;vertical-align:middle;"></span> در حال ایجاد برگه...');
+
+        $.ajax({
+            url: payamakio_vars.ajax_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'payamakio_auth_create_page',
+                nonce: payamakio_vars.nonce
+            },
+            success: function (res) {
+                $btn.prop('disabled', false).html(origHtml);
+                if (res.success) {
+                    var newOption = new Option('برگه ورود و عضویت (شناسه: ' + res.data.page_id + ')', res.data.page_id, true, true);
+                    $('#auth_page_id').append(newOption).trigger('change');
+                    $('#payamakio-auth-page-view-link').attr('href', res.data.page_url).show();
+                    alert(res.data.message + '\nآدرس برگه: ' + res.data.page_url);
+                } else {
+                    alert('خطا در ایجاد برگه: ' + (res.data ? res.data.message : 'خطای نامشخص'));
+                }
+            },
+            error: function () {
+                $btn.prop('disabled', false).html(origHtml);
+                alert('خطا در برقراری ارتباط با سرور.');
+            }
+        });
+    });
 });

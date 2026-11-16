@@ -206,6 +206,24 @@ class Payamakio_Helper {
                 ),
                 'tip'         => 'بلافاصله پس از ثبت سفارش به شماره موبایل مدیر سایت پیامک می شود.',
             ),
+            'auth_otp' => array(
+                'title'       => 'کد تایید ورود و عضویت ' . $site_name,
+                'description' => 'الگوی ارسال کد تایید یکبار مصرف (OTP) جهت ورود و ثبت نام در ' . $site_name,
+                'message'     => 'کد تایید شما: %code%' . "\n" . 'اعتبار: ۲ دقیقه' . "\n" . $site_name . ': ' . $host_url,
+                'variables'   => array(
+                    array( 'name' => 'code', 'type' => 'string', 'desc' => 'کد تایید یکبار مصرف' ),
+                ),
+                'tip'         => 'این الگو برای ارسال آنی کد اعتبارسنجی ورود و عضویت کاربران استفاده می شود.',
+            ),
+            'auth_reset' => array(
+                'title'       => 'بازیابی رمز عبور ' . $site_name,
+                'description' => 'الگوی ارسال کد تایید بازیابی و تغییر رمز عبور در ' . $site_name,
+                'message'     => 'کد تایید بازیابی رمز عبور: %code%' . "\n" . 'اعتبار: ۲ دقیقه' . "\n" . $site_name . ': ' . $host_url,
+                'variables'   => array(
+                    array( 'name' => 'code', 'type' => 'string', 'desc' => 'کد تایید بازیابی رمز' ),
+                ),
+                'tip'         => 'این الگو هنگام درخواست بازیابی کلمه عبور ارسال می شود.',
+            ),
         );
     }
 
@@ -316,6 +334,90 @@ class Payamakio_Helper {
     }
 
     /**
+     * Mask email address for privacy (e.g. a***@gmail.com)
+     */
+    public static function mask_email( $email ) {
+        if ( ! is_email( $email ) ) {
+            return $email;
+        }
+        $parts = explode( '@', $email );
+        $name  = $parts[0];
+        $host  = $parts[1] ?? '';
+        $len   = mb_strlen( $name );
+
+        if ( $len <= 2 ) {
+            $masked_name = substr( $name, 0, 1 ) . '*';
+        } else {
+            $masked_name = substr( $name, 0, 2 ) . str_repeat( '*', min( 4, $len - 2 ) );
+        }
+
+        return $masked_name . '@' . $host;
+    }
+
+    /**
+     * Find WordPress user by Iranian mobile number
+     * Checks username, payamakio_mobile, billing_phone, and digits_phone
+     *
+     * @param string $mobile
+     * @return WP_User|null
+     */
+    public static function get_user_by_mobile( $mobile ) {
+        $mobile = self::normalize_mobile( $mobile );
+        if ( empty( $mobile ) ) {
+            return null;
+        }
+
+        // 1. Check user_login
+        $user = get_user_by( 'login', $mobile );
+        if ( $user instanceof WP_User ) {
+            return $user;
+        }
+
+        // 2. Check usermeta payamakio_mobile
+        $users = get_users( array(
+            'meta_key'   => 'payamakio_mobile',
+            'meta_value' => $mobile,
+            'number'     => 1,
+        ) );
+        if ( ! empty( $users ) && $users[0] instanceof WP_User ) {
+            return $users[0];
+        }
+
+        // 3. Check WooCommerce billing_phone
+        $users = get_users( array(
+            'meta_key'   => 'billing_phone',
+            'meta_value' => $mobile,
+            'number'     => 1,
+        ) );
+        if ( ! empty( $users ) && $users[0] instanceof WP_User ) {
+            return $users[0];
+        }
+
+        // 4. Check Digits digits_phone meta
+        $users = get_users( array(
+            'meta_key'   => 'digits_phone',
+            'meta_value' => $mobile,
+            'number'     => 1,
+        ) );
+        if ( ! empty( $users ) && $users[0] instanceof WP_User ) {
+            return $users[0];
+        }
+
+        // 5. Check alternative format +98
+        $alt = '+98' . substr( $mobile, 1 );
+        $users = get_users( array(
+            'meta_key'   => 'billing_phone',
+            'meta_value' => $alt,
+            'number'     => 1,
+        ) );
+        if ( ! empty( $users ) && $users[0] instanceof WP_User ) {
+            return $users[0];
+        }
+
+        return null;
+    }
+
+    /**
      * SVG icon provider
      */
     public static function icon( $name, $size = 20, $class = '' ) {
@@ -367,6 +469,45 @@ class Payamakio_Helper {
 
             case 'chevron-left':
                 return '<svg ' . $common . '><polyline points="15 18 9 12 15 6"></polyline></svg>';
+
+            case 'key':
+                return '<svg ' . $common . '><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="m21 2-9.6 9.6"></path><path d="m15.5 7.5 3 3L22 7l-3-3"></path></svg>';
+
+            case 'lock':
+                return '<svg ' . $common . '><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
+
+            case 'unlock':
+                return '<svg ' . $common . '><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>';
+
+            case 'user':
+                return '<svg ' . $common . '><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+
+            case 'user-plus':
+                return '<svg ' . $common . '><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>';
+
+            case 'user-check':
+                return '<svg ' . $common . '><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>';
+
+            case 'phone':
+                return '<svg ' . $common . '><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>';
+
+            case 'mail':
+                return '<svg ' . $common . '><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22 6 12 13 2 6"></polyline></svg>';
+
+            case 'eye':
+                return '<svg ' . $common . '><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+
+            case 'eye-off':
+                return '<svg ' . $common . '><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+
+            case 'shield':
+                return '<svg ' . $common . '><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>';
+
+            case 'close':
+                return '<svg ' . $common . '><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+
+            case 'arrow-right':
+                return '<svg ' . $common . '><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
 
             default:
                 return '';

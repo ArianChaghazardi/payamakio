@@ -656,7 +656,7 @@
    -------------------------------------------------------------------------- */
 .payamakio-dw-actions-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     gap: 8px;
     padding: 10px 14px;
     background: #f8fafc;

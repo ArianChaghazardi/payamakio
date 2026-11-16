@@ -128,6 +128,14 @@ class Payamakio_Dashboard_Widget {
                 return 'لید مگنت و هدیه';
             case 'admin_alert':
                 return 'اعلان به مدیر';
+            case 'auth_otp':
+                return 'کد تایید ورود';
+            case 'auth_login':
+                return 'ورود پیامکی';
+            case 'auth_register':
+                return 'عضویت پیامکی';
+            case 'auth_reset':
+                return 'بازیابی کلمه عبور';
             case 'test_pattern':
                 return 'تست الگوی پترن';
             case 'test_webservice':
@@ -170,13 +178,15 @@ class Payamakio_Dashboard_Widget {
 
         $recent_logs  = Payamakio_Logger::get_logs( 5 );
 
+        $mod_auth       = ( ( $settings['auth_active'] ?? 'yes' ) === 'yes' );
         $mod_completed  = ( ( $settings['order_completed_active'] ?? 'yes' ) === 'yes' );
         $mod_processing = ( ( $settings['order_processing_active'] ?? 'no' ) === 'yes' );
         $mod_cart       = ( ( $settings['cart_recovery_active'] ?? 'no' ) === 'yes' );
         $mod_lead       = ( ( $settings['lead_magnet_active'] ?? 'yes' ) === 'yes' );
         $mod_admin      = ( ( $settings['admin_alert_active'] ?? 'no' ) === 'yes' );
 
-        $gateway_tab_url = admin_url( 'admin.php?page=payamakio#tab-gateway' );
+        $gateway_tab_url = admin_url( 'admin.php?page=payamakio#tab-gateways' );
+        $auth_url        = admin_url( 'admin.php?page=payamakio#tab-auth' );
         $orders_url      = admin_url( 'admin.php?page=payamakio#tab-orders' );
         $recovery_url    = admin_url( 'admin.php?page=payamakio#tab-recovery' );
         $lead_url        = admin_url( 'admin.php?page=payamakio#tab-lead' );
@@ -310,6 +320,11 @@ class Payamakio_Dashboard_Widget {
                 <a href="<?php echo esc_url( $orders_url ); ?>" class="payamakio-dw-section-link">پیکربندی ماژول ها</a>
             </div>
             <div class="payamakio-dw-modules-grid">
+                <a href="<?php echo esc_url( $auth_url ); ?>" class="payamakio-dw-module-chip <?php echo $mod_auth ? 'is-active' : 'is-inactive'; ?>">
+                    <span class="payamakio-dw-module-dot"></span>
+                    <span class="payamakio-dw-module-name">ورود و عضویت</span>
+                    <span class="payamakio-dw-module-state"><?php echo $mod_auth ? 'فعال' : 'غیر فعال'; ?></span>
+                </a>
                 <a href="<?php echo esc_url( $orders_url ); ?>" class="payamakio-dw-module-chip <?php echo $mod_completed ? 'is-active' : 'is-inactive'; ?>">
                     <span class="payamakio-dw-module-dot"></span>
                     <span class="payamakio-dw-module-name">تکمیل سفارش</span>
@@ -391,6 +406,10 @@ class Payamakio_Dashboard_Widget {
 
         <!-- Quick Navigation Bar -->
         <div class="payamakio-dw-actions-grid">
+            <a href="<?php echo esc_url( $auth_url ); ?>" class="payamakio-dw-action-btn">
+                <span class="payamakio-dw-action-icon"><?php echo Payamakio_Helper::icon( 'key', 16 ); ?></span>
+                <span class="payamakio-dw-action-label">ورود و عضویت</span>
+            </a>
             <a href="<?php echo esc_url( $gateway_tab_url ); ?>" class="payamakio-dw-action-btn">
                 <span class="payamakio-dw-action-icon"><?php echo Payamakio_Helper::icon( 'settings', 16 ); ?></span>
                 <span class="payamakio-dw-action-label">تنظیمات درگاه</span>

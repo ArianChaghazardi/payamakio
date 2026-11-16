@@ -126,6 +126,27 @@ class Payamakio_Admin {
             'admin_alert_active'       => isset( $raw['admin_alert_active'] ) ? 'yes' : 'no',
             'admin_alert_mobile'       => sanitize_text_field( $raw['admin_alert_mobile'] ?? '' ),
             'admin_alert_pattern'      => sanitize_text_field( $raw['admin_alert_pattern'] ?? '' ),
+
+            // SMS Auth & OTP Settings (Digits-like)
+            'auth_active'              => isset( $raw['auth_active'] ) ? 'yes' : 'no',
+            'auth_default_tab'         => in_array( $raw['auth_default_tab'] ?? '', array( 'otp', 'password' ), true ) ? $raw['auth_default_tab'] : 'otp',
+            'auth_allow_password'      => isset( $raw['auth_allow_password'] ) ? 'yes' : 'no',
+            'auth_allow_reset'         => isset( $raw['auth_allow_reset'] ) ? 'yes' : 'no',
+            'auth_auto_register'       => isset( $raw['auth_auto_register'] ) ? 'yes' : 'no',
+            'auth_field_name'          => in_array( $raw['auth_field_name'] ?? '', array( 'disabled', 'optional', 'required' ), true ) ? $raw['auth_field_name'] : 'optional',
+            'auth_field_email'         => in_array( $raw['auth_field_email'] ?? '', array( 'disabled', 'optional', 'auto' ), true ) ? $raw['auth_field_email'] : 'auto',
+            'auth_field_password'      => in_array( $raw['auth_field_password'] ?? '', array( 'disabled', 'optional', 'auto' ), true ) ? $raw['auth_field_password'] : 'auto',
+            'auth_default_role'        => sanitize_text_field( $raw['auth_default_role'] ?? 'customer' ),
+            'auth_otp_pattern'         => sanitize_text_field( $raw['auth_otp_pattern'] ?? '' ),
+            'auth_otp_param'           => sanitize_text_field( $raw['auth_otp_param'] ?? 'code' ),
+            'auth_reset_pattern'       => sanitize_text_field( $raw['auth_reset_pattern'] ?? '' ),
+            'auth_code_length'         => in_array( absint( $raw['auth_code_length'] ?? 5 ), array( 4, 5, 6 ), true ) ? absint( $raw['auth_code_length'] ) : 5,
+            'auth_code_expiry'         => absint( $raw['auth_code_expiry'] ?? 120 ),
+            'auth_override_woo'        => isset( $raw['auth_override_woo'] ) ? 'yes' : 'no',
+            'auth_redirect_wplogin'    => isset( $raw['auth_redirect_wplogin'] ) ? 'yes' : 'no',
+            'auth_redirect_login'      => sanitize_text_field( $raw['auth_redirect_login'] ?? 'myaccount' ),
+            'auth_redirect_register'   => sanitize_text_field( $raw['auth_redirect_register'] ?? 'myaccount' ),
+            'auth_page_id'             => absint( $raw['auth_page_id'] ?? 0 ),
         );
 
         update_option( 'payamakio_settings', $clean );

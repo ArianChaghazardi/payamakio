@@ -59,6 +59,10 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
                 <span class="payamakio-tab-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg></span>
                 <span class="payamakio-tab-text">تنظیمات درگاه پیامک</span>
             </a>
+            <a href="#tab-auth" class="payamakio-tab-btn" data-tab="tab-auth">
+                <span class="payamakio-tab-icon"><?php echo Payamakio_Helper::icon( 'key', 18 ); ?></span>
+                <span class="payamakio-tab-text">ورود و عضویت پیامکی</span>
+            </a>
             <a href="#tab-orders" class="payamakio-tab-btn" data-tab="tab-orders">
                 <span class="payamakio-tab-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></span>
                 <span class="payamakio-tab-text">پیامک وضعیت سفارشات</span>
@@ -220,6 +224,307 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
                             <label class="payamakio-label" for="melipayamak_password">کلمه عبور ملی پیامک</label>
                             <input type="password" id="melipayamak_password" name="payamakio[melipayamak_password]" value="<?php echo esc_attr( $settings['melipayamak_password'] ?? '' ); ?>" class="payamakio-input">
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: AUTH & OTP (DIGITS-LIKE SMS AUTH) -->
+        <div id="tab-auth" class="payamakio-tab-content">
+            <!-- 1. General & Mode -->
+            <div class="payamakio-card">
+                <div class="payamakio-card-header">
+                    <h2 class="payamakio-card-title">سیستم ورود و عضویت با پیامک (مشابه دیجیتس)</h2>
+                    <p class="payamakio-card-desc">احراز هویت هوشمند، ورود و ثبت نام بدون رمز عبور با کد یکبار مصرف (OTP)، هماهنگ با ووکامرس و وردپرس.</p>
+                </div>
+
+                <div class="payamakio-box-section">
+                    <div class="payamakio-box-header">
+                        <div class="payamakio-box-title-wrap">
+                            <span class="payamakio-status-bullet status-auth"></span>
+                            <h3 class="payamakio-box-title">فعال سازی ماژول ورود و عضویت پیامکی</h3>
+                        </div>
+                        <label class="payamakio-switch">
+                            <input type="checkbox" name="payamakio[auth_active]" value="yes" <?php checked( $settings['auth_active'] ?? 'yes', 'yes' ); ?>>
+                            <span class="payamakio-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="payamakio-row">
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_default_tab">تب پیش فرض هنگام باز شدن فرم</label>
+                            <select id="auth_default_tab" name="payamakio[auth_default_tab]" class="payamakio-input">
+                                <option value="otp" <?php selected( $settings['auth_default_tab'] ?? 'otp', 'otp' ); ?>>ورود با رمز یکبار مصرف (OTP)</option>
+                                <option value="password" <?php selected( $settings['auth_default_tab'] ?? 'otp', 'password' ); ?>>ورود با کلمه عبور سنتی</option>
+                            </select>
+                            <span class="payamakio-hint">کدام سربرگ در اولین بارگذاری فرم احراز هویت به صورت فعال نمایش داده شود.</span>
+                        </div>
+
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_default_role">نقش کاربری پیش فرض کاربران جدید</label>
+                            <select id="auth_default_role" name="payamakio[auth_default_role]" class="payamakio-input">
+                                <option value="customer" <?php selected( $settings['auth_default_role'] ?? 'customer', 'customer' ); ?>>مشتری ووکامرس (Customer)</option>
+                                <option value="subscriber" <?php selected( $settings['auth_default_role'] ?? 'customer', 'subscriber' ); ?>>مشترک وردپرس (Subscriber)</option>
+                            </select>
+                            <span class="payamakio-hint">نقشی که به کاربرانی که با شماره موبایل ثبت نام می کنند اختصاص می یابد.</span>
+                        </div>
+                    </div>
+
+                    <div class="payamakio-row" style="margin-top: 15px;">
+                        <div class="payamakio-col">
+                            <div class="payamakio-box-header" style="padding: 10px 0; border: none;">
+                                <div class="payamakio-box-title-wrap">
+                                    <h4 class="payamakio-box-title" style="font-size: 14px;">امکان ورود با کلمه عبور سنتی</h4>
+                                </div>
+                                <label class="payamakio-switch">
+                                    <input type="checkbox" name="payamakio[auth_allow_password]" value="yes" <?php checked( $settings['auth_allow_password'] ?? 'yes', 'yes' ); ?>>
+                                    <span class="payamakio-slider"></span>
+                                </label>
+                            </div>
+                            <span class="payamakio-hint">کاربران می توانند علاوه بر پیامک، با نام کاربری یا ایمیل و کلمه عبور وارد شوند.</span>
+                        </div>
+
+                        <div class="payamakio-col">
+                            <div class="payamakio-box-header" style="padding: 10px 0; border: none;">
+                                <div class="payamakio-box-title-wrap">
+                                    <h4 class="payamakio-box-title" style="font-size: 14px;">امکان بازیابی کلمه عبور با پیامک</h4>
+                                </div>
+                                <label class="payamakio-switch">
+                                    <input type="checkbox" name="payamakio[auth_allow_reset]" value="yes" <?php checked( $settings['auth_allow_reset'] ?? 'yes', 'yes' ); ?>>
+                                    <span class="payamakio-slider"></span>
+                                </label>
+                            </div>
+                            <span class="payamakio-hint">ارسال کد تایید پیامکی برای تعیین و تغییر سریع کلمه عبور فراموش شده.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Registration & Fields -->
+            <div class="payamakio-card">
+                <div class="payamakio-card-header">
+                    <h2 class="payamakio-card-title">ثبت نام خودکار و تنظیم فیلدهای کاربری</h2>
+                    <p class="payamakio-card-desc">تعیین رفتار سیستم هنگام ورود شماره های جدید و انتخاب فیلدهای اجباری یا اختیاری.</p>
+                </div>
+
+                <div class="payamakio-box-section">
+                    <div class="payamakio-box-header">
+                        <div class="payamakio-box-title-wrap">
+                            <span class="payamakio-status-bullet status-cart"></span>
+                            <h3 class="payamakio-box-title">ثبت نام خودکار کاربران جدید با اولین ورود</h3>
+                        </div>
+                        <label class="payamakio-switch">
+                            <input type="checkbox" name="payamakio[auth_auto_register]" value="yes" <?php checked( $settings['auth_auto_register'] ?? 'yes', 'yes' ); ?>>
+                            <span class="payamakio-slider"></span>
+                        </label>
+                    </div>
+                    <span class="payamakio-hint" style="display: block; margin-bottom: 16px;">اگر شماره موبایل در سایت موجود نباشد، با تایید کد OTP بلافاصله حساب کاربری جدید ایجاد شده و کاربر لاگین می شود.</span>
+
+                    <div class="payamakio-row">
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_field_name">فیلد نام و نام خانوادگی در فرم ثبت نام</label>
+                            <select id="auth_field_name" name="payamakio[auth_field_name]" class="payamakio-input">
+                                <option value="optional" <?php selected( $settings['auth_field_name'] ?? 'optional', 'optional' ); ?>>اختیاری (پیشنهادی)</option>
+                                <option value="required" <?php selected( $settings['auth_field_name'] ?? 'optional', 'required' ); ?>>اجباری</option>
+                                <option value="disabled" <?php selected( $settings['auth_field_name'] ?? 'optional', 'disabled' ); ?>>غیر فعال (مخفی)</option>
+                            </select>
+                        </div>
+
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_field_email">فیلد ایمیل در ثبت نام</label>
+                            <select id="auth_field_email" name="payamakio[auth_field_email]" class="payamakio-input">
+                                <option value="auto" <?php selected( $settings['auth_field_email'] ?? 'auto', 'auto' ); ?>>تولید خودکار بر اساس شماره موبایل (پیشنهادی)</option>
+                                <option value="optional" <?php selected( $settings['auth_field_email'] ?? 'auto', 'optional' ); ?>>اختیاری (نمایش فیلد در فرم)</option>
+                                <option value="disabled" <?php selected( $settings['auth_field_email'] ?? 'auto', 'disabled' ); ?>>غیر فعال و تولید خودکار</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="payamakio-row" style="margin-top: 15px;">
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_field_password">فیلد رمز عبور در فرم ثبت نام</label>
+                            <select id="auth_field_password" name="payamakio[auth_field_password]" class="payamakio-input">
+                                <option value="auto" <?php selected( $settings['auth_field_password'] ?? 'auto', 'auto' ); ?>>تولید خودکار کلمه عبور قوی تصادفی (پیشنهادی)</option>
+                                <option value="optional" <?php selected( $settings['auth_field_password'] ?? 'auto', 'optional' ); ?>>اختیاری (در صورت تمایل کاربر ثبت می کند)</option>
+                                <option value="disabled" <?php selected( $settings['auth_field_password'] ?? 'auto', 'disabled' ); ?>>بدون رمز (فقط ورود با کد یکبار مصرف)</option>
+                            </select>
+                        </div>
+
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_code_length">طول کد یکبار مصرف پیامکی</label>
+                            <select id="auth_code_length" name="payamakio[auth_code_length]" class="payamakio-input">
+                                <option value="4" <?php selected( $settings['auth_code_length'] ?? 5, 4 ); ?>>۴ رقم</option>
+                                <option value="5" <?php selected( $settings['auth_code_length'] ?? 5, 5 ); ?>>۵ رقم (استاندارد)</option>
+                                <option value="6" <?php selected( $settings['auth_code_length'] ?? 5, 6 ); ?>>۶ رقم</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="payamakio-row" style="margin-top: 15px;">
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_code_expiry">مدت زمان اعتبار کد تایید (ثانیه)</label>
+                            <input type="number" id="auth_code_expiry" name="payamakio[auth_code_expiry]" value="<?php echo esc_attr( $settings['auth_code_expiry'] ?? 120 ); ?>" min="30" max="600" class="payamakio-input">
+                            <span class="payamakio-hint">تایمر شمارش معکوس قبل از امکان ارسال مجدد کد (پیشنهادی: ۱۲۰ ثانیه).</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. SMS Patterns -->
+            <div class="payamakio-card">
+                <div class="payamakio-card-header">
+                    <h2 class="payamakio-card-title">الگوهای پیامک تایید و بازیابی رمز</h2>
+                    <p class="payamakio-card-desc">کد پترن های خدماتی تایید شده در پنل پیامک برای ارسال کد OTP زیر ۵ ثانیه.</p>
+                </div>
+
+                <div class="payamakio-box-section">
+                    <div class="payamakio-box-header">
+                        <div class="payamakio-box-title-wrap">
+                            <span class="payamakio-status-bullet status-completed"></span>
+                            <h3 class="payamakio-box-title">الگوی کد تایید یکبار مصرف (OTP)</h3>
+                        </div>
+                    </div>
+
+                    <?php Payamakio_Helper::render_default_pattern_box( 'auth_otp', 'auth_otp_pattern' ); ?>
+
+                    <div class="payamakio-row">
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_otp_pattern">کد الگوی OTP در پنل پیامک</label>
+                            <input type="text" id="auth_otp_pattern" name="payamakio[auth_otp_pattern]" value="<?php echo esc_attr( $settings['auth_otp_pattern'] ?? '' ); ?>" class="payamakio-input" placeholder="مثلا: 100234">
+                            <span class="payamakio-hint">کد پترن تایید شده ارسال کد ورود و ثبت نام.</span>
+                        </div>
+
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_otp_param">نام متغیر کد در الگو</label>
+                            <input type="text" id="auth_otp_param" name="payamakio[auth_otp_param]" value="<?php echo esc_attr( $settings['auth_otp_param'] ?? 'code' ); ?>" class="payamakio-input" placeholder="code">
+                            <span class="payamakio-hint">نام متغیر تعریف شده در پترن (پیش فرض: code).</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payamakio-box-section" style="margin-top: 24px;">
+                    <div class="payamakio-box-header">
+                        <div class="payamakio-box-title-wrap">
+                            <span class="payamakio-status-bullet status-admin"></span>
+                            <h3 class="payamakio-box-title">الگوی بازیابی رمز عبور</h3>
+                        </div>
+                    </div>
+
+                    <?php Payamakio_Helper::render_default_pattern_box( 'auth_reset', 'auth_reset_pattern' ); ?>
+
+                    <div class="payamakio-row">
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_reset_pattern">کد الگوی بازیابی کلمه عبور در پنل پیامک</label>
+                            <input type="text" id="auth_reset_pattern" name="payamakio[auth_reset_pattern]" value="<?php echo esc_attr( $settings['auth_reset_pattern'] ?? '' ); ?>" class="payamakio-input" placeholder="مثلا: 100235">
+                            <span class="payamakio-hint">کد پترن ارسال کد تایید جهت تغییر کلمه عبور.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. WooCommerce & Redirection -->
+            <div class="payamakio-card">
+                <div class="payamakio-card-header">
+                    <h2 class="payamakio-card-title">ادغام با ووکامرس و تغییر مسیرها</h2>
+                    <p class="payamakio-card-desc">جایگزینی فرم پیش فرض ووکامرس و مدیریت مقصدهای هدایت کاربران پس از ورود.</p>
+                </div>
+
+                <div class="payamakio-box-section">
+                    <div class="payamakio-box-header">
+                        <div class="payamakio-box-title-wrap">
+                            <span class="payamakio-status-bullet status-processing"></span>
+                            <h3 class="payamakio-box-title">جایگزینی فرم حساب کاربری من در ووکامرس</h3>
+                        </div>
+                        <label class="payamakio-switch">
+                            <input type="checkbox" name="payamakio[auth_override_woo]" value="yes" <?php checked( $settings['auth_override_woo'] ?? 'yes', 'yes' ); ?>>
+                            <span class="payamakio-slider"></span>
+                        </label>
+                    </div>
+                    <span class="payamakio-hint" style="display: block; margin-bottom: 16px;">فرم استاندارد ووکامرس در صفحه my-account با فرم ورود و ثبت نام پیامکی شیک و مدرن جایگزین می شود.</span>
+
+                    <div class="payamakio-box-header" style="margin-top: 15px;">
+                        <div class="payamakio-box-title-wrap">
+                            <span class="payamakio-status-bullet status-gift"></span>
+                            <h3 class="payamakio-box-title">انتقال صفحه ورود پیش فرض وردپرس (wp-login.php)</h3>
+                        </div>
+                        <label class="payamakio-switch">
+                            <input type="checkbox" name="payamakio[auth_redirect_wplogin]" value="yes" <?php checked( $settings['auth_redirect_wplogin'] ?? 'no', 'yes' ); ?>>
+                            <span class="payamakio-slider"></span>
+                        </label>
+                    </div>
+                    <span class="payamakio-hint" style="display: block; margin-bottom: 16px;">کاربرانی که آدرس wp-login.php را باز کنند به صورت خودکار به برگه اختصاصی ورود پیامکی منتقل می شوند.</span>
+
+                    <div class="payamakio-row" style="margin-top: 15px;">
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_redirect_login">هدایت کاربر پس از ورود موفق</label>
+                            <select id="auth_redirect_login" name="payamakio[auth_redirect_login]" class="payamakio-input">
+                                <option value="myaccount" <?php selected( $settings['auth_redirect_login'] ?? 'myaccount', 'myaccount' ); ?>>حساب کاربری من ووکامرس</option>
+                                <option value="home" <?php selected( $settings['auth_redirect_login'] ?? 'myaccount', 'home' ); ?>>صفحه اصلی سایت</option>
+                                <option value="checkout" <?php selected( $settings['auth_redirect_login'] ?? 'myaccount', 'checkout' ); ?>>صفحه تسویه حساب</option>
+                                <option value="current" <?php selected( $settings['auth_redirect_login'] ?? 'myaccount', 'current' ); ?>>رفرش در همان صفحه فعلی</option>
+                            </select>
+                        </div>
+
+                        <div class="payamakio-col">
+                            <label class="payamakio-label" for="auth_redirect_register">هدایت کاربر پس از ثبت نام موفق</label>
+                            <select id="auth_redirect_register" name="payamakio[auth_redirect_register]" class="payamakio-input">
+                                <option value="myaccount" <?php selected( $settings['auth_redirect_register'] ?? 'myaccount', 'myaccount' ); ?>>حساب کاربری من ووکامرس</option>
+                                <option value="home" <?php selected( $settings['auth_redirect_register'] ?? 'myaccount', 'home' ); ?>>صفحه اصلی سایت</option>
+                                <option value="checkout" <?php selected( $settings['auth_redirect_register'] ?? 'myaccount', 'checkout' ); ?>>صفحه تسویه حساب</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Dedicated Page & Shortcodes -->
+            <div class="payamakio-card">
+                <div class="payamakio-card-header">
+                    <h2 class="payamakio-card-title">برگه اختصاصی و شورت کدهای پیامکیو</h2>
+                    <p class="payamakio-card-desc">تعریف برگه ورود اختصاصی سایت و دسترسی سریع به کدهای کوتاه جهت استفاده در المنتور و قالب ها.</p>
+                </div>
+
+                <div class="payamakio-box-section">
+                    <?php
+                    $all_pages = get_pages();
+                    $selected_page_id = absint( $settings['auth_page_id'] ?? 0 );
+                    ?>
+                    <label class="payamakio-label" for="auth_page_id">برگه اختصاصی ورود و عضویت</label>
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <select id="auth_page_id" name="payamakio[auth_page_id]" class="payamakio-input" style="flex: 1; min-width: 240px;">
+                            <option value="0">— انتخاب برگه —</option>
+                            <?php foreach ( $all_pages as $p ) : ?>
+                                <option value="<?php echo esc_attr( $p->ID ); ?>" <?php selected( $selected_page_id, $p->ID ); ?>>
+                                    <?php echo esc_html( $p->post_title ); ?> (ID: <?php echo esc_html( $p->ID ); ?>)
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+
+                        <button type="button" id="payamakio-btn-create-auth-page" class="payamakio-btn payamakio-btn-primary" style="white-space: nowrap;">
+                            <?php echo Payamakio_Helper::icon( 'user-plus', 16 ); ?>
+                            <span>ایجاد خودکار برگه با ۱ کلیک</span>
+                        </button>
+
+                        <a href="<?php echo $selected_page_id ? esc_url( get_permalink( $selected_page_id ) ) : '#'; ?>" id="payamakio-auth-page-view-link" target="_blank" class="payamakio-btn payamakio-btn-ghost" style="<?php echo $selected_page_id ? '' : 'display:none;'; ?>">
+                            <?php echo Payamakio_Helper::icon( 'eye', 16 ); ?>
+                            <span>مشاهده برگه</span>
+                        </a>
+                    </div>
+                    <span class="payamakio-hint">اگر برگه ای انتخاب نشده باشد، با فشردن دکمه ۱ کلیک، برگه ای با عنوان "ورود و عضویت" و پیوند یکتای /auth ایجاد می گردد.</span>
+
+                    <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px;">
+                        <h4 style="margin: 0 0 10px; font-size: 14px; font-weight: 800; color: #0f172a;">کدهای کوتاه و نحوه استفاده در طراحی سایت:</h4>
+                        <ul style="margin: 0; padding-right: 18px; font-size: 12.5px; line-height: 1.9; color: #475569;">
+                            <li>
+                                <strong>شورت کد استاندارد فرم ورود:</strong> <code>[payamakio_auth]</code> &mdash; قابل قرار دادن در هر برگه، ستون المنتور یا ابزارک.
+                            </li>
+                            <li>
+                                <strong>شورت کد با تب پیش فرض:</strong> <code>[payamakio_auth default_tab="otp"]</code> یا <code>[payamakio_auth default_tab="password"]</code>
+                            </li>
+                            <li>
+                                <strong>باز شدن پنجره پاپ آپ با دکمه سفارشی:</strong> کافی است در منو، هدر، المنتور یا قالب سایت به دکمه یا لینک مورد نظر خود کلاس <code>payamakio-open-modal</code> بدهید (مثال: <code>&lt;a href="#" class="payamakio-open-modal"&gt;ورود یا ثبت نام&lt;/a&gt;</code>).
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

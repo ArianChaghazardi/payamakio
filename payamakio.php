@@ -2,8 +2,8 @@
 /**
  * Plugin Name: پیامکیو | سامانه هوشمند پیامک و اتوماسیون ووکامرس
  * Plugin URI: https://hectortm.ir/payamakio
- * Description: افزونه جامع و مدرن اطلاع رسانی پیامکی، بازیابی هوشمند سبد خرید رها شده و ارسال فوق سریع پترن ووکامرس با پنل مدیریت پیشرفته.
- * Version: 1.0.3
+ * Description: افزونه جامع و فوق پیشرفته ورود و عضویت پیامکی (مشابه دیجیتس)، اطلاع رسانی پیامکی ووکامرس، بازیابی هوشمند سبد خرید رها شده و ارسال فوق سریع پترن با پنل مدیریت مدرن.
+ * Version: 2.0.0
  * Author: آرین چقازردی
  * Author URI: https://arianchaghazardi.ir
  * Developer: هکتورتیم
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define Plugin Constants
-define( 'PAYAMAKIO_VERSION', '1.0.3' );
+define( 'PAYAMAKIO_VERSION', '2.0.0' );
 define( 'PAYAMAKIO_FILE', __FILE__ );
 define( 'PAYAMAKIO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PAYAMAKIO_URL', plugin_dir_url( __FILE__ ) );
@@ -68,6 +68,7 @@ final class Payamakio {
         require_once PAYAMAKIO_PATH . 'includes/gateways/class-gateway-melipayamak.php';
 
         // Modules
+        require_once PAYAMAKIO_PATH . 'includes/modules/class-module-auth.php';
         require_once PAYAMAKIO_PATH . 'includes/modules/class-module-order-sms.php';
         require_once PAYAMAKIO_PATH . 'includes/modules/class-module-cart-recovery.php';
         require_once PAYAMAKIO_PATH . 'includes/modules/class-module-lead-magnet.php';
@@ -92,6 +93,7 @@ final class Payamakio {
         Payamakio_Logger::check_table();
 
         // Boot Modules
+        Payamakio_Module_Auth::get_instance();
         Payamakio_Module_Order_SMS::get_instance();
         Payamakio_Module_Cart_Recovery::get_instance();
         Payamakio_Module_Lead_Magnet::get_instance();
@@ -107,33 +109,59 @@ final class Payamakio {
         Payamakio_Logger::create_table();
         Payamakio_Module_Cart_Recovery::schedule_recovery_cron();
 
-        // Set default options if not exists
-        if ( false === get_option( 'payamakio_settings' ) ) {
-            $defaults = array(
-                'gateway'               => 'ippanel',
-                'ippanel_apikey'        => '',
-                'ippanel_sender'        => '+983000505',
-                'kavenegar_apikey'      => '',
-                'kavenegar_sender'      => '',
-                'melipayamak_username'  => '',
-                'melipayamak_password'  => '',
-                'melipayamak_sender'    => '',
-                'order_completed_active'=> 'yes',
-                'order_completed_pattern'=> '',
-                'order_completed_param' => 'name,order_id,amount',
-                'order_processing_active'=> 'no',
-                'order_processing_pattern'=> '',
-                'cart_recovery_active'  => 'no',
-                'cart_recovery_delay'   => 30, // minutes
-                'cart_recovery_pattern' => '',
-                'lead_magnet_active'    => 'yes',
-                'lead_magnet_pattern'   => '',
-                'lead_magnet_coupon'    => 'VIP30',
-                'admin_alert_active'    => 'no',
-                'admin_alert_mobile'    => '',
-                'admin_alert_pattern'   => '',
-            );
+        // Default settings
+        $defaults = array(
+            'gateway'                  => 'ippanel',
+            'ippanel_apikey'           => '',
+            'ippanel_sender'           => '+983000505',
+            'kavenegar_apikey'         => '',
+            'kavenegar_sender'         => '',
+            'melipayamak_username'     => '',
+            'melipayamak_password'     => '',
+            'melipayamak_sender'       => '',
+            'order_completed_active'   => 'yes',
+            'order_completed_pattern'  => '',
+            'order_completed_param'    => 'name,order_id,amount',
+            'order_processing_active'  => 'no',
+            'order_processing_pattern' => '',
+            'cart_recovery_active'     => 'no',
+            'cart_recovery_delay'      => 30, // minutes
+            'cart_recovery_pattern'    => '',
+            'lead_magnet_active'       => 'yes',
+            'lead_magnet_pattern'      => '',
+            'lead_magnet_coupon'       => 'VIP30',
+            'admin_alert_active'       => 'no',
+            'admin_alert_mobile'       => '',
+            'admin_alert_pattern'      => '',
+
+            // Auth defaults
+            'auth_active'              => 'yes',
+            'auth_default_tab'         => 'otp',
+            'auth_allow_password'      => 'yes',
+            'auth_allow_reset'         => 'yes',
+            'auth_auto_register'       => 'yes',
+            'auth_field_name'          => 'optional',
+            'auth_field_email'         => 'auto',
+            'auth_field_password'      => 'auto',
+            'auth_default_role'        => 'customer',
+            'auth_otp_pattern'         => '',
+            'auth_otp_param'           => 'code',
+            'auth_reset_pattern'       => '',
+            'auth_code_length'         => 5,
+            'auth_code_expiry'         => 120,
+            'auth_override_woo'        => 'yes',
+            'auth_redirect_wplogin'    => 'no',
+            'auth_redirect_login'      => 'myaccount',
+            'auth_redirect_register'   => 'myaccount',
+            'auth_page_id'             => 0,
+        );
+
+        $existing = get_option( 'payamakio_settings' );
+        if ( false === $existing ) {
             update_option( 'payamakio_settings', $defaults );
+        } else {
+            $merged = array_merge( $defaults, (array) $existing );
+            update_option( 'payamakio_settings', $merged );
         }
     }
 
