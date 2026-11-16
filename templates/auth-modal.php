@@ -16,7 +16,7 @@ if ( is_user_logged_in() ) {
 }
 ?>
 
-<div id="payamakio-auth-modal" class="payamakio-auth-modal" role="dialog" aria-modal="true" aria-labelledby="payamakio-auth-modal-title">
+<div id="payamakio-auth-modal" class="payamakio-auth-modal" style="display: none !important;" role="dialog" aria-modal="true" aria-labelledby="payamakio-auth-modal-title">
     <div class="payamakio-auth-modal-backdrop"></div>
     <div class="payamakio-auth-modal-dialog">
         <button type="button" class="payamakio-auth-modal-close" aria-label="بستن پنجره">

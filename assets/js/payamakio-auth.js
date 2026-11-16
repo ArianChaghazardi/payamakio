@@ -56,16 +56,18 @@
      */
     function showAlert($card, message, type) {
         var $alert = $card.find('.payamakio-auth-alert');
-        $alert.removeClass('alert-error alert-success').addClass(type === 'success' ? 'alert-success' : 'alert-error');
+        $alert.removeClass('alert-error alert-success is-hidden').addClass(type === 'success' ? 'alert-success' : 'alert-error');
         $alert.find('.payamakio-auth-alert-text').html(message);
-        $alert.slideDown(200);
+        $alert.hide().slideDown(200);
     }
 
     /**
      * Clear alert
      */
     function hideAlert($card) {
-        $card.find('.payamakio-auth-alert').slideUp(150);
+        $card.find('.payamakio-auth-alert').slideUp(150, function () {
+            $(this).addClass('is-hidden');
+        });
     }
 
     /**
@@ -84,6 +86,13 @@
 
             $card.find('.payamakio-auth-view').removeClass('is-active');
             $card.find('.payamakio-view-' + view).addClass('is-active');
+
+            if (view === 'otp') {
+                $card.find('.payamakio-form-otp-send').removeClass('is-hidden').show();
+                $card.find('.payamakio-form-otp-verify').addClass('is-hidden').hide();
+                clearInterval(timerInterval);
+            }
+
             hideAlert($card);
         });
 
@@ -100,8 +109,8 @@
             $card.find('.payamakio-auth-tab-btn').removeClass('is-active');
             $card.find('.payamakio-auth-view').removeClass('is-active');
             $card.find('.payamakio-view-reset').addClass('is-active');
-            $card.find('.payamakio-form-reset-send').show();
-            $card.find('.payamakio-form-reset-verify').hide();
+            $card.find('.payamakio-form-reset-send').removeClass('is-hidden').show();
+            $card.find('.payamakio-form-reset-verify').addClass('is-hidden').hide();
             hideAlert($card);
         });
 
@@ -119,8 +128,8 @@
             var $resendBtn = $card.find('.payamakio-auth-btn-resend');
             var $countdown = $card.find('.payamakio-timer-countdown');
 
-            $timerWrap.show();
-            $resendBtn.hide();
+            $timerWrap.removeClass('is-hidden').show();
+            $resendBtn.addClass('is-hidden').hide();
 
             function updateDisplay() {
                 var m = Math.floor(remaining / 60);
@@ -130,8 +139,8 @@
 
                 if (remaining <= 0) {
                     clearInterval(timerInterval);
-                    $timerWrap.hide();
-                    $resendBtn.show();
+                    $timerWrap.addClass('is-hidden').hide();
+                    $resendBtn.removeClass('is-hidden').show();
                 }
                 remaining--;
             }
@@ -154,9 +163,13 @@
 
             $card.find('.payamakio-auth-sent-number').text(mobile);
 
-            $step1.slideUp(180);
-            $card.find('.payamakio-form-register').slideUp(180);
-            $step2.slideDown(200);
+            $step1.slideUp(180, function () {
+                $(this).addClass('is-hidden');
+            });
+            $card.find('.payamakio-form-register').slideUp(180, function () {
+                $(this).addClass('is-hidden');
+            });
+            $step2.removeClass('is-hidden').hide().slideDown(200);
 
             // Clear digit boxes and focus first
             $card.find('.payamakio-digit-box').val('').removeClass('is-filled');
@@ -170,8 +183,10 @@
         // 7. Edit Phone Button (Back to Step 1)
         $card.on('click', '.payamakio-auth-btn-edit-phone', function () {
             clearInterval(timerInterval);
-            $card.find('.payamakio-form-otp-verify').slideUp(180);
-            $card.find('.payamakio-form-otp-send').slideDown(200);
+            $card.find('.payamakio-form-otp-verify').slideUp(180, function () {
+                $(this).addClass('is-hidden');
+            });
+            $card.find('.payamakio-form-otp-send').removeClass('is-hidden').hide().slideDown(200);
             hideAlert($card);
         });
 
@@ -419,9 +434,11 @@
                 $btn.removeClass('is-loading');
                 if (res && res.success) {
                     showAlert($card, res.data.message || 'کد بازیابی ارسال گردید.', 'success');
-                    $form.slideUp(180);
+                    $form.slideUp(180, function () {
+                        $(this).addClass('is-hidden');
+                    });
                     $card.find('.payamakio-target-reset-mobile').val(mobile);
-                    $card.find('.payamakio-form-reset-verify').slideDown(200);
+                    $card.find('.payamakio-form-reset-verify').removeClass('is-hidden').hide().slideDown(200);
                 } else {
                     var errMsg = (res && res.data && res.data.message) ? res.data.message : 'کاربری با این شماره یافت نشد.';
                     showAlert($card, errMsg, 'error');

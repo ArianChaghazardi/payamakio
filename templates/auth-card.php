@@ -96,7 +96,7 @@ $card_classes   = 'payamakio-auth-card' . ( $in_modal ? ' is-in-modal' : '' );
         </div>
 
         <!-- Global Alert Notification Box -->
-        <div class="payamakio-auth-alert" style="display: none;">
+        <div class="payamakio-auth-alert is-hidden" style="display: none !important;">
             <div class="payamakio-auth-alert-icon"></div>
             <div class="payamakio-auth-alert-text"></div>
         </div>
@@ -131,7 +131,7 @@ $card_classes   = 'payamakio-auth-card' . ( $in_modal ? ' is-in-modal' : '' );
                 </form>
 
                 <!-- Step 2: OTP Verification Digit Boxes -->
-                <form class="payamakio-auth-form payamakio-form-otp-verify" method="post" style="display: none;" autocomplete="off">
+                <form class="payamakio-auth-form payamakio-form-otp-verify is-hidden" method="post" style="display: none !important;" autocomplete="off">
                     <input type="hidden" name="mobile" class="payamakio-target-mobile" value="" />
                     <input type="hidden" name="mode" class="payamakio-target-mode" value="auto" />
                     <input type="hidden" name="first_name" class="payamakio-target-fname" value="" />
@@ -169,7 +169,7 @@ $card_classes   = 'payamakio-auth-card' . ( $in_modal ? ' is-in-modal' : '' );
                             <span>ارسال مجدد کد پس از </span>
                             <strong class="payamakio-timer-countdown">02:00</strong>
                         </div>
-                        <button type="button" class="payamakio-auth-btn-resend" style="display: none;">
+                        <button type="button" class="payamakio-auth-btn-resend is-hidden" style="display: none !important;">
                             <?php echo Payamakio_Helper::icon( 'refresh', 13 ); ?>
                             <span>ارسال مجدد کد تایید</span>
                         </button>
@@ -318,7 +318,7 @@ $card_classes   = 'payamakio-auth-card' . ( $in_modal ? ' is-in-modal' : '' );
                     </form>
 
                     <!-- Reset Step 2: Verify OTP and Enter New Password -->
-                    <form class="payamakio-auth-form payamakio-form-reset-verify" method="post" style="display: none;" autocomplete="off">
+                    <form class="payamakio-auth-form payamakio-form-reset-verify is-hidden" method="post" style="display: none !important;" autocomplete="off">
                         <input type="hidden" name="mobile" class="payamakio-target-reset-mobile" value="" />
 
                         <div class="payamakio-auth-field">

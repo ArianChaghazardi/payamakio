@@ -77,6 +77,14 @@ class Payamakio_Module_Auth {
     }
 
     /**
+     * Check if the popup modal is active in settings
+     */
+    public static function is_modal_active() {
+        $settings = get_option( 'payamakio_settings', array() );
+        return ( ( $settings['auth_modal_active'] ?? 'no' ) === 'yes' );
+    }
+
+    /**
      * Enqueue CSS & JS assets on the frontend
      */
     public function enqueue_frontend_assets() {
@@ -168,6 +176,27 @@ class Payamakio_Module_Auth {
             );
         }
 
+        // When modal is disabled in settings, direct link to login/auth page
+        if ( ! self::is_modal_active() ) {
+            $settings     = get_option( 'payamakio_settings', array() );
+            $auth_page_id = absint( $settings['auth_page_id'] ?? 0 );
+            $target_url   = ( $auth_page_id > 0 && get_post_status( $auth_page_id ) === 'publish' )
+                ? get_permalink( $auth_page_id )
+                : ( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url() );
+
+            $classes = 'payamakio-btn payamakio-btn-' . sanitize_html_class( $atts['style'] );
+            if ( ! empty( $atts['class'] ) ) {
+                $classes .= ' ' . sanitize_html_class( $atts['class'] );
+            }
+            return sprintf(
+                '<a href="%s" class="%s" role="button">%s<span>%s</span></a>',
+                esc_url( $target_url ),
+                esc_attr( trim( $classes ) ),
+                $icon_html,
+                esc_html( $atts['text'] )
+            );
+        }
+
         $classes = 'payamakio-open-modal payamakio-btn payamakio-btn-' . sanitize_html_class( $atts['style'] );
         if ( ! empty( $atts['class'] ) ) {
             $classes .= ' ' . sanitize_html_class( $atts['class'] );
@@ -196,10 +225,10 @@ class Payamakio_Module_Auth {
     }
 
     /**
-     * Render Modal Markup in Footer (only when not on login page and not having inline card)
+     * Render Modal Markup in Footer (only when modal is active, not on login page and not having inline card)
      */
     public function render_modal_markup() {
-        if ( ! self::is_active() || is_user_logged_in() ) {
+        if ( ! self::is_active() || ! self::is_modal_active() || is_user_logged_in() ) {
             return;
         }
 

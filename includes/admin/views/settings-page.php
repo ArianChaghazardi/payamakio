@@ -444,6 +444,18 @@ $current_gateway = $settings['gateway'] ?? 'ippanel';
 
                     <div class="payamakio-box-header" style="margin-top: 15px;">
                         <div class="payamakio-box-title-wrap">
+                            <span class="payamakio-status-bullet status-cart"></span>
+                            <h3 class="payamakio-box-title">فعال سازی پنجره پاپ آپ ورود (Modal)</h3>
+                        </div>
+                        <label class="payamakio-switch">
+                            <input type="checkbox" name="payamakio[auth_modal_active]" value="yes" <?php checked( $settings['auth_modal_active'] ?? 'no', 'yes' ); ?>>
+                            <span class="payamakio-slider"></span>
+                        </label>
+                    </div>
+                    <span class="payamakio-hint" style="display: block; margin-bottom: 16px;">با فعال سازی این گزینه، پنجره پاپ آپ ورود برای استفاده با دکمه [payamakio_modal] یا کلاس payamakio-open-modal در سایت بارگذاری می شود. در صورت غیرفعال بودن، پاپ آپ کلا خاموش بوده و کاربران تنها از صفحه ورود استفاده می کنند.</span>
+
+                    <div class="payamakio-box-header" style="margin-top: 15px;">
+                        <div class="payamakio-box-title-wrap">
                             <span class="payamakio-status-bullet status-gift"></span>
                             <h3 class="payamakio-box-title">انتقال صفحه ورود پیش فرض وردپرس (wp-login.php)</h3>
                         </div>
