@@ -809,71 +809,179 @@ html body .payamakio-auth-card .payamakio-auth-btn-outline:hover {
    Modal Popup Styles
    -------------------------------------------------------------------------- */
 .payamakio-auth-modal {
+    display: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9999999 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 24px 14px !important;
+    box-sizing: border-box !important;
+}
+
+.payamakio-auth-modal.is-active {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+@media (max-height: 700px), (max-width: 480px) {
+    .payamakio-auth-modal.is-active {
+        align-items: flex-start !important;
+    }
+}
+
+.payamakio-auth-modal-backdrop {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    z-index: 999999 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 16px !important;
-    box-sizing: border-box !important;
-}
-
-.payamakio-auth-modal-backdrop {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    background: rgba(15, 23, 42, 0.65) !important;
-    backdrop-filter: blur(5px) !important;
-    -webkit-backdrop-filter: blur(5px) !important;
+    background: rgba(15, 23, 42, 0.72) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
     animation: payamakioBackdropFade 0.25s ease-out !important;
+    z-index: 1 !important;
+    cursor: pointer !important;
 }
 
 .payamakio-auth-modal-dialog {
     position: relative !important;
-    z-index: 2 !important;
+    z-index: 10 !important;
     width: 100% !important;
     max-width: 440px !important;
+    margin: auto !important;
     box-sizing: border-box !important;
     animation: payamakioModalZoom 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
+@media (max-height: 700px), (max-width: 480px) {
+    .payamakio-auth-modal-dialog {
+        margin: 16px auto !important;
+    }
+}
+
+.payamakio-auth-modal .payamakio-auth-card {
+    margin: 0 auto !important;
+    border-radius: 16px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45) !important;
+    border: 1px solid rgba(226, 232, 240, 0.8) !important;
+    background: #ffffff !important;
+    position: relative !important;
+}
+
+.payamakio-auth-card.is-in-modal {
+    margin: 0 auto !important;
+}
+
 html body .payamakio-auth-modal .payamakio-auth-modal-close {
     position: absolute !important;
-    top: -14px !important;
-    left: -14px !important;
-    width: 34px !important;
-    height: 34px !important;
+    top: 14px !important;
+    left: 14px !important;
+    width: 32px !important;
+    height: 32px !important;
     border-radius: 50% !important;
-    background: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-    color: #475569 !important;
-    display: flex !important;
+    background: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #64748b !important;
+    display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     cursor: pointer !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
     transition: all 0.2s ease !important;
-    z-index: 100 !important;
+    z-index: 120 !important;
     padding: 0 !important;
     margin: 0 !important;
+    box-shadow: none !important;
+    touch-action: manipulation !important;
 }
 
 html body .payamakio-auth-modal .payamakio-auth-modal-close:hover {
-    background: var(--payamakio-auth-primary) !important;
-    color: #ffffff !important;
+    background: #fee2e2 !important;
+    color: #ef4444 !important;
+    border-color: #fca5a5 !important;
     transform: rotate(90deg) !important;
 }
 
 html body .payamakio-auth-modal .payamakio-auth-modal-close svg {
-    width: 18px !important;
-    height: 18px !important;
+    width: 16px !important;
+    height: 16px !important;
     stroke: currentColor !important;
+    stroke-width: 2.2 !important;
+    pointer-events: none !important;
+}
+
+body.payamakio-modal-open {
+    overflow: hidden !important;
+}
+
+/* --------------------------------------------------------------------------
+   Shortcode Modal Trigger Button Styles
+   -------------------------------------------------------------------------- */
+a.payamakio-btn,
+button.payamakio-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 10px 20px !important;
+    border-radius: 10px !important;
+    font-family: inherit !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    box-sizing: border-box !important;
+}
+
+a.payamakio-btn-primary,
+button.payamakio-btn-primary {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.28) !important;
+}
+
+a.payamakio-btn-primary:hover,
+button.payamakio-btn-primary:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.38) !important;
+}
+
+a.payamakio-btn-outline,
+button.payamakio-btn-outline {
+    background: transparent !important;
+    color: #ef4444 !important;
+    border: 1.5px solid #ef4444 !important;
+}
+
+a.payamakio-btn-outline:hover,
+button.payamakio-btn-outline:hover {
+    background: #fee2e2 !important;
+    color: #dc2626 !important;
+}
+
+a.payamakio-btn-ghost,
+button.payamakio-btn-ghost {
+    background: #f1f5f9 !important;
+    color: #334155 !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+a.payamakio-btn-ghost:hover,
+button.payamakio-btn-ghost:hover {
+    background: #e2e8f0 !important;
+    color: #0f172a !important;
 }
 
 @keyframes payamakioBackdropFade {

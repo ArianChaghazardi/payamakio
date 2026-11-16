@@ -15,6 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Payamakio_Module_Auth {
 
     private static $instance = null;
+    private static $has_inline_card = false;
 
     public static function get_instance() {
         if ( is_null( self::$instance ) ) {
@@ -34,6 +35,11 @@ class Payamakio_Module_Auth {
         // Shortcodes
         add_shortcode( 'payamakio_auth', array( $this, 'render_shortcode' ) );
         add_shortcode( 'payamakio_login', array( $this, 'render_shortcode' ) );
+        add_shortcode( 'payamakio_modal', array( $this, 'render_modal_button_shortcode' ) );
+        add_shortcode( 'payamakio_auth_modal', array( $this, 'render_modal_button_shortcode' ) );
+        add_shortcode( 'payamakio_auth_btn', array( $this, 'render_modal_button_shortcode' ) );
+        add_shortcode( 'payamakio_auth_button', array( $this, 'render_modal_button_shortcode' ) );
+        add_shortcode( 'payamakio_login_button', array( $this, 'render_modal_button_shortcode' ) );
 
         // Modal popup in footer
         add_action( 'wp_footer', array( $this, 'render_modal_markup' ) );
@@ -104,9 +110,20 @@ class Payamakio_Module_Auth {
     }
 
     /**
-     * Render the shortcode [payamakio_auth]
+     * Render the shortcode [payamakio_auth] or popup triggers
      */
     public function render_shortcode( $atts = array() ) {
+        if ( ! self::is_active() ) {
+            return '';
+        }
+
+        $atts = (array) $atts;
+        if ( ( isset( $atts['type'] ) && 'modal' === $atts['type'] ) || ( isset( $atts['modal'] ) && 'yes' === $atts['modal'] ) ) {
+            return $this->render_modal_button_shortcode( $atts );
+        }
+
+        self::$has_inline_card = true;
+
         $atts = shortcode_atts( array(
             'redirect'    => '',
             'default_tab' => '',
@@ -118,9 +135,60 @@ class Payamakio_Module_Auth {
     }
 
     /**
+     * Render popup modal trigger button shortcode: [payamakio_modal] or [payamakio_auth_modal]
+     */
+    public function render_modal_button_shortcode( $atts = array() ) {
+        if ( ! self::is_active() ) {
+            return '';
+        }
+
+        $atts = shortcode_atts( array(
+            'text'           => 'ورود / عضویت',
+            'logged_in_text' => 'حساب کاربری',
+            'style'          => 'primary', // primary, outline, ghost
+            'icon'           => 'yes',
+            'class'          => '',
+        ), (array) $atts, 'payamakio_modal' );
+
+        $is_logged_in = is_user_logged_in();
+        $icon_html    = ( 'yes' === $atts['icon'] ) ? Payamakio_Helper::icon( 'user', 16 ) : '';
+
+        if ( $is_logged_in ) {
+            $my_account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url();
+            $classes        = 'payamakio-btn payamakio-btn-' . sanitize_html_class( $atts['style'] );
+            if ( ! empty( $atts['class'] ) ) {
+                $classes .= ' ' . sanitize_html_class( $atts['class'] );
+            }
+            return sprintf(
+                '<a href="%s" class="%s">%s<span>%s</span></a>',
+                esc_url( $my_account_url ),
+                esc_attr( trim( $classes ) ),
+                $icon_html,
+                esc_html( $atts['logged_in_text'] )
+            );
+        }
+
+        $classes = 'payamakio-open-modal payamakio-btn payamakio-btn-' . sanitize_html_class( $atts['style'] );
+        if ( ! empty( $atts['class'] ) ) {
+            $classes .= ' ' . sanitize_html_class( $atts['class'] );
+        }
+
+        return sprintf(
+            '<a href="#payamakio-auth" class="%s" role="button">%s<span>%s</span></a>',
+            esc_attr( trim( $classes ) ),
+            $icon_html,
+            esc_html( $atts['text'] )
+        );
+    }
+
+    /**
      * Render Authentication Card Component
      */
     public static function render_auth_card( $args = array() ) {
+        if ( empty( $args['in_modal'] ) ) {
+            self::$has_inline_card = true;
+        }
+
         $template_file = PAYAMAKIO_PATH . 'templates/auth-card.php';
         if ( file_exists( $template_file ) ) {
             include $template_file;
@@ -128,11 +196,41 @@ class Payamakio_Module_Auth {
     }
 
     /**
-     * Render Modal Markup in Footer
+     * Render Modal Markup in Footer (only when not on login page and not having inline card)
      */
     public function render_modal_markup() {
         if ( ! self::is_active() || is_user_logged_in() ) {
             return;
+        }
+
+        // Never render modal on pages that already contain the inline login card
+        if ( self::$has_inline_card ) {
+            return;
+        }
+
+        // Never render modal on WooCommerce My Account page
+        if ( function_exists( 'is_account_page' ) && is_account_page() ) {
+            return;
+        }
+
+        // Never render modal on dedicated auth page
+        $settings     = get_option( 'payamakio_settings', array() );
+        $auth_page_id = absint( $settings['auth_page_id'] ?? 0 );
+        if ( $auth_page_id > 0 && is_page( $auth_page_id ) ) {
+            return;
+        }
+
+        // Never render modal if current post has inline [payamakio_auth] or [payamakio_login] shortcode
+        global $post;
+        if ( is_a( $post, 'WP_Post' ) ) {
+            if ( has_shortcode( $post->post_content, 'payamakio_auth' ) ) {
+                if ( ! preg_match( '/\[payamakio_auth[^\]]*(modal=["\']yes["\']|type=["\']modal["\'])/i', $post->post_content ) ) {
+                    return;
+                }
+            }
+            if ( has_shortcode( $post->post_content, 'payamakio_login' ) ) {
+                return;
+            }
         }
 
         $template_file = PAYAMAKIO_PATH . 'templates/auth-modal.php';

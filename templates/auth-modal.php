@@ -16,14 +16,14 @@ if ( is_user_logged_in() ) {
 }
 ?>
 
-<div id="payamakio-auth-modal" class="payamakio-auth-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="payamakio-auth-modal-title">
+<div id="payamakio-auth-modal" class="payamakio-auth-modal" role="dialog" aria-modal="true" aria-labelledby="payamakio-auth-modal-title">
     <div class="payamakio-auth-modal-backdrop"></div>
     <div class="payamakio-auth-modal-dialog">
         <button type="button" class="payamakio-auth-modal-close" aria-label="بستن پنجره">
-            <?php echo Payamakio_Helper::icon( 'close', 18 ); ?>
+            <?php echo Payamakio_Helper::icon( 'close', 16 ); ?>
         </button>
         <div class="payamakio-auth-modal-content">
-            <?php Payamakio_Module_Auth::render_auth_card(); ?>
+            <?php Payamakio_Module_Auth::render_auth_card( array( 'in_modal' => true ) ); ?>
         </div>
     </div>
 </div>

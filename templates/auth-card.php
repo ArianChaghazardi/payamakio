@@ -39,9 +39,11 @@ if ( 'password' === $default_tab && ! $allow_password ) {
 
 $my_account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url();
 $logout_url     = wp_logout_url( home_url() );
+$in_modal       = ! empty( $args['in_modal'] );
+$card_classes   = 'payamakio-auth-card' . ( $in_modal ? ' is-in-modal' : '' );
 ?>
 
-<div class="payamakio-auth-card" dir="rtl" data-code-length="<?php echo esc_attr( $code_length ); ?>" data-cooldown="<?php echo esc_attr( $cooldown_seconds ); ?>">
+<div class="<?php echo esc_attr( $card_classes ); ?>" dir="rtl" data-code-length="<?php echo esc_attr( $code_length ); ?>" data-cooldown="<?php echo esc_attr( $cooldown_seconds ); ?>">
     
     <?php if ( $is_logged_in ) : ?>
         <!-- Logged-in State Card -->
@@ -69,7 +71,7 @@ $logout_url     = wp_logout_url( home_url() );
             <div class="payamakio-auth-logo-badge">
                 <?php echo Payamakio_Helper::icon( 'phone', 24 ); ?>
             </div>
-            <h2 class="payamakio-auth-title">ورود و عضویت در <?php echo esc_html( $site_title ); ?></h2>
+            <h2 id="payamakio-auth-modal-title" class="payamakio-auth-title">ورود و عضویت در <?php echo esc_html( $site_title ); ?></h2>
             <p class="payamakio-auth-subtitle">احراز هویت سریع، امن و یکپارچه با شماره موبایل</p>
         </div>
 

@@ -476,26 +476,38 @@
         if (!$modal.length) return;
 
         function openModal() {
-            $modal.fadeIn(200);
+            $modal.addClass('is-active').stop(true, true).fadeIn(200);
             $('body').addClass('payamakio-modal-open');
         }
 
         function closeModal() {
-            $modal.fadeOut(180);
+            $modal.stop(true, true).fadeOut(180, function () {
+                $(this).removeClass('is-active');
+            });
             $('body').removeClass('payamakio-modal-open');
         }
 
-        $(document).on('click', '.payamakio-open-modal, .payamakio-auth-modal-btn, a[href="#payamakio-auth"]', function (e) {
+        $(document).on('click', '.payamakio-open-modal, .payamakio-auth-modal-btn, a[href="#payamakio-auth"], a[href="#payamakio-modal"]', function (e) {
             e.preventDefault();
             openModal();
         });
 
-        $modal.on('click', '.payamakio-auth-modal-close, .payamakio-auth-modal-backdrop', function () {
+        // Close on close button click
+        $modal.on('click', '.payamakio-auth-modal-close', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
             closeModal();
         });
 
+        // Close on backdrop or outside dialog click
+        $modal.on('click', function (e) {
+            if ($(e.target).closest('.payamakio-auth-modal-dialog').length === 0) {
+                closeModal();
+            }
+        });
+
         $(document).on('keydown', function (e) {
-            if (e.key === 'Escape' && $modal.is(':visible')) {
+            if (e.key === 'Escape' && ( $modal.hasClass('is-active') || $modal.is(':visible') )) {
                 closeModal();
             }
         });
